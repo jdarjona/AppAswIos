@@ -1,0 +1,6 @@
+framework module Pods_AppASW {
+  umbrella header "Pods-AppASW-umbrella.h"
+
+  export *
+  module * { export * }
+}
