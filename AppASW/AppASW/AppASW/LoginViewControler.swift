@@ -29,12 +29,12 @@ class LoginViewControler:UIViewController{
         dispatch_async(dispatch_get_main_queue(), {
                 
             if result{
-                self.performSegueWithIdentifier("MenuVentas", sender: self)
+                self.performSegueWithIdentifier("Login", sender: self)
             }else{
-//              let alertController = UIAlertController(title: "Autentificación", message:
-//              "No Autorizada", preferredStyle: UIAlertControllerStyle.Alert)
-//              alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
-//              self.presentViewController(alertController, animated: true, completion: nil)
+              let alertController = UIAlertController(title: "Autentificación", message:
+              "No Autorizada", preferredStyle: UIAlertControllerStyle.Alert)
+              alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+              self.presentViewController(alertController, animated: true, completion: nil)
             }
         })
     })
