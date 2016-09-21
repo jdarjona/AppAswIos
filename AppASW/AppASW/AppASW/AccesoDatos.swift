@@ -84,9 +84,10 @@ public class AccesoDatos: NSObject {
                             print("------")
                             print(token)
                             print("------")
+                            
                             // Keep record of the token
                             //let saveToken:Bool = KeychainWrapper.setString(token, forKey: "access_token")
-                            //result(result: true)
+                            result(result: true)
                             
                             
                             
@@ -107,7 +108,7 @@ public class AccesoDatos: NSObject {
                         }
                         
                     }
-                    result(result: true)
+                   // result(result: false)
                 }
 
                 task.resume()

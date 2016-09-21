@@ -19,24 +19,41 @@ class LoginViewControler:UIViewController{
     @IBOutlet weak var passwordTextField: UITextField!
     
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    
+    @IBAction func AceptarLoginTouchUpInside(sender: UIButton) {
+        
+        
+            
+            
+        self.datos.getlogin(self.usuarioTextField.text!, password: self.passwordTextField.text!,result: {(result: Bool)->Void in
+        dispatch_async(dispatch_get_main_queue(), {
+                
+            if result{
+                self.performSegueWithIdentifier("MenuVentas", sender: self)
+            }else{
+//              let alertController = UIAlertController(title: "Autentificación", message:
+//              "No Autorizada", preferredStyle: UIAlertControllerStyle.Alert)
+//              alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+//              self.presentViewController(alertController, animated: true, completion: nil)
+            }
+        })
+    })
+            
+            
+        
+        
+        
+    }
+    
+    /*override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         print("No ze que aze ezto")
         return true
 
     }
+*/
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        datos.getlogin(usuarioTextField.text!, password: passwordTextField.text!,result: {(result: Bool)->Void in
-        
-            if result{
-                
-            }else{
-                let alertController = UIAlertController(title: "Autentificación", message:
-                    "No Autorizada", preferredStyle: UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
-        })
         
         
 
