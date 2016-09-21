@@ -344,7 +344,7 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
             datos.basicURL = "http://192.168.1.2/WSTRH/%@"
           
         case 1:
-            datos.basicURL = "http://intranet.trh-es.com/WSTRH/%@"
+            datos.basicURL = "http://intranet.trh-be.com/WSTRH/%@"
             
         default:
             datos.basicURL = "http://192.168.1.2/WSTRH/%@"
@@ -409,7 +409,11 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
             
         
             })
-     }
+        
+        datos.getOferta("OV16/5454") { (result) in
+                    print(result)
+        }
+    }
     
     func setTitle(title:String, subtitle:String) -> UIView {
         let titleLabel = UILabel(frame: CGRectMake(0, -5, 0, 0))
