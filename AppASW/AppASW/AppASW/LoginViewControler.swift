@@ -26,7 +26,8 @@ class LoginViewControler:UIViewController{
             
             
         self.datos.getlogin(self.usuarioTextField.text!, password: self.passwordTextField.text!,result: {(result: Bool)->Void in
-        dispatch_async(dispatch_get_main_queue(), {
+        
+            dispatch_async(dispatch_get_main_queue(), {
                 
             if result{
                 self.performSegueWithIdentifier("Login", sender: self)
@@ -52,11 +53,11 @@ class LoginViewControler:UIViewController{
     }
 */
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    /*override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         
         
 
-    }
+    }*/
 }
 
