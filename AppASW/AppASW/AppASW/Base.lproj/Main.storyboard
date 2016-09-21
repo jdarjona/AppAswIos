@@ -202,7 +202,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PAb-vW-Ugi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="191" y="153"/>
+            <point key="canvasLocation" x="137" y="153"/>
         </scene>
         <!--Custom Side Menu Controller-->
         <scene sceneID="x9X-eK-Ig7">
@@ -294,7 +294,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="ACEPTAR"/>
                                 <connections>
-                                    <segue destination="scH-ef-wcO" kind="push" identifier="pushVentas" id="Ygt-xz-f8E"/>
+                                    <action selector="AceptarLoginTouchUpInside:" destination="f7R-sz-WVI" eventType="touchUpInside" id="XlE-zp-KYX"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -304,11 +304,12 @@
                     <connections>
                         <outlet property="passwordTextField" destination="Zx2-sA-LYv" id="yzc-m8-Jp5"/>
                         <outlet property="usuarioTextField" destination="yYL-Jy-AYr" id="4gF-Wq-ICQ"/>
+                        <segue destination="scH-ef-wcO" kind="custom" identifier="MenuVentas" customClass="SegueMenuController" customModule="AppASW" customModuleProvider="target" id="DB3-MH-LtQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a6b-cy-cYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="623" y="1434"/>
+            <point key="canvasLocation" x="608" y="1434"/>
         </scene>
         <!--Controller Sinoptico-->
         <scene sceneID="f89-rI-El5">
@@ -324,7 +325,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gbv-Pe-q32" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="191" y="779"/>
+            <point key="canvasLocation" x="137" y="784"/>
         </scene>
         <!--Ventas-->
         <scene sceneID="ht5-3E-JCQ">
@@ -373,7 +374,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UGC-aQ-4pL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1115" y="1434"/>
+            <point key="canvasLocation" x="1039" y="1434"/>
         </scene>
         <!--Controller AppVentas-->
         <scene sceneID="s8d-9i-aKP">
@@ -389,7 +390,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AvM-mT-DXz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="191" y="1434"/>
+            <point key="canvasLocation" x="137" y="1434"/>
         </scene>
         <!--Sinóptico-->
         <scene sceneID="C4n-Xl-7S0">
