@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="M8c-wc-C2E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="f7R-sz-WVI">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -213,16 +213,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="WVm-ej-qMK"/>
                     <connections>
                         <segue destination="Edk-kH-bsW" kind="custom" identifier="containSideMenu" customClass="SideContainmentSegue" customModule="SideMenuController" id="rlm-fA-7xZ"/>
                         <segue destination="T4n-rC-LEV" kind="custom" identifier="MonitorizacionCarga" customClass="CenterContainmentSegue" customModule="SideMenuController" id="9Vc-uv-flB"/>
                         <segue destination="Xfe-da-K6h" kind="custom" identifier="SinopticoFabrica" customClass="CenterContainmentSegue" customModule="SideMenuController" id="j0I-fe-duC"/>
-                        <segue destination="R0h-gI-xLt" kind="custom" identifier="OfertaVenta" customClass="CenterContainmentSegue" customModule="SideMenuController" id="OcB-7g-8gr"/>
+                        <segue destination="R0h-gI-xLt" kind="custom" identifier="OfertaVentas" customClass="CenterContainmentSegue" customModule="SideMenuController" id="OcB-7g-8gr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xWH-mK-gXl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-375" y="1094"/>
+            <point key="canvasLocation" x="-351" y="1094"/>
         </scene>
         <!--Menu Controller Table View Controller-->
         <scene sceneID="tvf-Hr-rAB">
@@ -287,7 +288,7 @@
                                 <rect key="frame" x="41" y="246" width="238" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gYz-CE-WSl">
                                 <rect key="frame" x="112" y="325" width="96" height="30"/>
@@ -304,12 +305,12 @@
                     <connections>
                         <outlet property="passwordTextField" destination="Zx2-sA-LYv" id="yzc-m8-Jp5"/>
                         <outlet property="usuarioTextField" destination="yYL-Jy-AYr" id="4gF-Wq-ICQ"/>
-                        <segue destination="scH-ef-wcO" kind="custom" identifier="MenuVentas" customClass="SegueMenuController" customModule="AppASW" customModuleProvider="target" id="DB3-MH-LtQ"/>
+                        <segue destination="M8c-wc-C2E" kind="push" identifier="Login" customClass="SegueMenuController" customModule="AppASW" customModuleProvider="target" id="H9f-Ft-ceu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a6b-cy-cYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="608" y="1434"/>
+            <point key="canvasLocation" x="-776" y="1094"/>
         </scene>
         <!--Controller Sinoptico-->
         <scene sceneID="f89-rI-El5">
@@ -335,18 +336,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wrI-fq-JqU">
-                                <rect key="frame" x="42" y="346" width="76" height="84"/>
+                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="spatial" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wrI-fq-JqU">
+                                <rect key="frame" x="73" y="346" width="65" height="65"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <state key="normal" title="L. Pedidos" image="Pedidos"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ORu-qp-1pq">
-                                <rect key="frame" x="196" y="346" width="84" height="84"/>
+                                <rect key="frame" x="196" y="346" width="65" height="65"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <state key="normal" title="Productos" image="Productos"/>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="017-r9-808">
-                                <rect key="frame" x="42" y="157" width="76" height="82"/>
+                                <rect key="frame" x="73" y="187" width="65" height="65"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Oferta +" image="Oferta">
@@ -354,7 +355,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PxA-bt-2ix">
-                                <rect key="frame" x="196" y="157" width="84" height="82"/>
+                                <rect key="frame" x="196" y="187" width="65" height="65"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="L. Ofertas" image="Ofertas"/>
                             </button>
@@ -374,7 +375,21 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UGC-aQ-4pL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1039" y="1434"/>
+            <point key="canvasLocation" x="608" y="1434"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="18P-Yu-qFD">
+            <objects>
+                <viewController id="toX-33-tOx" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="A4S-hX-1Rs">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VGe-my-Bwf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1011" y="1434"/>
         </scene>
         <!--Controller AppVentas-->
         <scene sceneID="s8d-9i-aKP">
@@ -385,7 +400,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="f7R-sz-WVI" kind="relationship" relationship="rootViewController" id="tuc-dn-ucY"/>
+                        <segue destination="scH-ef-wcO" kind="relationship" relationship="rootViewController" id="ni2-Js-RGi"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AvM-mT-DXz" userLabel="First Responder" sceneMemberID="firstResponder"/>

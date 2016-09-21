@@ -52,11 +52,11 @@ class LoginViewControler:UIViewController{
     }
 */
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    /*override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         
         
 
-    }
+    }*/
 }
 
