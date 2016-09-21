@@ -25,20 +25,20 @@ class LoginViewControler:UIViewController{
         
             
             
-        self.datos.getlogin(self.usuarioTextField.text!, password: self.passwordTextField.text!,result: {(result: Bool)->Void in
-        dispatch_async(dispatch_get_main_queue(), {
-                
-            if result{
-                self.performSegueWithIdentifier("MenuVentas", sender: self)
-            }else{
-//              let alertController = UIAlertController(title: "Autentificación", message:
-//              "No Autorizada", preferredStyle: UIAlertControllerStyle.Alert)
-//              alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
-//              self.presentViewController(alertController, animated: true, completion: nil)
-            }
-        })
-    })
+        ManagerLogin.getlogin(self.usuarioTextField.text!, password: self.passwordTextField.text!,result: {(result: Bool)->Void in
             
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                if result{
+                    self.performSegueWithIdentifier("Login", sender: self)
+                }else{
+                    let alertController = UIAlertController(title: "Autentificación", message:
+                        "No Autorizada", preferredStyle: UIAlertControllerStyle.Alert)
+                    alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
+            })
+        })
             
         
         
