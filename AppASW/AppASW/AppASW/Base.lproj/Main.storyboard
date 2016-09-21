@@ -108,7 +108,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="719" y="285"/>
+            <point key="canvasLocation" x="608" y="153"/>
         </scene>
         <!--Detalle Pedido-->
         <scene sceneID="VUW-dg-dmC">
@@ -124,7 +124,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetallePedidoCell" rowHeight="90" id="b99-JU-UTl" customClass="DetallePedidoTableViewCell" customModule="AppASW" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="90"/>
+                                        <rect key="frame" x="0.0" y="92" width="320" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b99-JU-UTl" id="gAQ-sN-Flo">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
@@ -186,12 +186,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aca-Z7-Frv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1137" y="347"/>
+            <point key="canvasLocation" x="1016" y="153"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Controller Monitorizacion-->
         <scene sceneID="DGp-5e-aHK">
             <objects>
-                <navigationController modalPresentationStyle="currentContext" id="T4n-rC-LEV" sceneMemberID="viewController">
+                <navigationController modalPresentationStyle="currentContext" id="T4n-rC-LEV" userLabel="Controller Monitorizacion" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="TK7-1M-eSd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -202,7 +202,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PAb-vW-Ugi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="276" y="205"/>
+            <point key="canvasLocation" x="191" y="153"/>
         </scene>
         <!--Custom Side Menu Controller-->
         <scene sceneID="x9X-eK-Ig7">
@@ -217,11 +217,12 @@
                         <segue destination="Edk-kH-bsW" kind="custom" identifier="containSideMenu" customClass="SideContainmentSegue" customModule="SideMenuController" id="rlm-fA-7xZ"/>
                         <segue destination="T4n-rC-LEV" kind="custom" identifier="MonitorizacionCarga" customClass="CenterContainmentSegue" customModule="SideMenuController" id="9Vc-uv-flB"/>
                         <segue destination="Xfe-da-K6h" kind="custom" identifier="SinopticoFabrica" customClass="CenterContainmentSegue" customModule="SideMenuController" id="j0I-fe-duC"/>
+                        <segue destination="R0h-gI-xLt" kind="custom" identifier="OfertaVenta" customClass="CenterContainmentSegue" customModule="SideMenuController" id="OcB-7g-8gr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xWH-mK-gXl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-221" y="292"/>
+            <point key="canvasLocation" x="-375" y="1094"/>
         </scene>
         <!--Menu Controller Table View Controller-->
         <scene sceneID="tvf-Hr-rAB">
@@ -252,12 +253,67 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzX-If-Gmk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-325" y="985"/>
+            <point key="canvasLocation" x="-375" y="1950"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Log-->
+        <scene sceneID="VJ2-Zr-Zlp">
+            <objects>
+                <viewController title="Log" id="f7R-sz-WVI" customClass="LoginViewControler" customModule="AppASW" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XmV-t4-k6L">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usuario" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mg8-Hj-1Lm">
+                                <rect key="frame" x="112" y="152" width="96" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contraseña" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="08L-Rh-pix">
+                                <rect key="frame" x="112" y="223" width="96" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="yYL-Jy-AYr">
+                                <rect key="frame" x="41" y="177" width="238" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="Zx2-sA-LYv">
+                                <rect key="frame" x="41" y="246" width="238" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gYz-CE-WSl">
+                                <rect key="frame" x="112" y="325" width="96" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="ACEPTAR"/>
+                                <connections>
+                                    <segue destination="scH-ef-wcO" kind="push" identifier="pushVentas" id="Ygt-xz-f8E"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="lKx-ax-LEX"/>
+                    <connections>
+                        <outlet property="passwordTextField" destination="Zx2-sA-LYv" id="yzc-m8-Jp5"/>
+                        <outlet property="usuarioTextField" destination="yYL-Jy-AYr" id="4gF-Wq-ICQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a6b-cy-cYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="623" y="1434"/>
+        </scene>
+        <!--Controller Sinoptico-->
         <scene sceneID="f89-rI-El5">
             <objects>
-                <navigationController id="Xfe-da-K6h" sceneMemberID="viewController">
+                <navigationController id="Xfe-da-K6h" userLabel="Controller Sinoptico" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="t77-wp-EJ3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -269,6 +325,71 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gbv-Pe-q32" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="191" y="779"/>
+        </scene>
+        <!--Ventas-->
+        <scene sceneID="ht5-3E-JCQ">
+            <objects>
+                <viewController id="scH-ef-wcO" customClass="MenuVentasViewController" customModule="AppASW" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LDi-vG-D3Z" userLabel="Opciones Ventas">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wrI-fq-JqU">
+                                <rect key="frame" x="42" y="346" width="76" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <state key="normal" title="L. Pedidos" image="Pedidos"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ORu-qp-1pq">
+                                <rect key="frame" x="196" y="346" width="84" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <state key="normal" title="Productos" image="Productos"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="017-r9-808">
+                                <rect key="frame" x="42" y="157" width="76" height="82"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Oferta +" image="Oferta">
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PxA-bt-2ix">
+                                <rect key="frame" x="196" y="157" width="84" height="82"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="L. Ofertas" image="Ofertas"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" image="YES"/>
+                        </accessibility>
+                    </view>
+                    <navigationItem key="navigationItem" title="Ventas" id="2He-zV-S8q"/>
+                    <connections>
+                        <outlet property="listadoOfertas" destination="PxA-bt-2ix" id="Fgx-u4-71d"/>
+                        <outlet property="listadoPedidos" destination="wrI-fq-JqU" id="x8U-Fe-YwP"/>
+                        <outlet property="listadoProductos" destination="ORu-qp-1pq" id="ZUw-jO-YVq"/>
+                        <outlet property="nuevaOferta" destination="017-r9-808" id="8mq-7W-wIm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UGC-aQ-4pL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1115" y="1434"/>
+        </scene>
+        <!--Controller AppVentas-->
+        <scene sceneID="s8d-9i-aKP">
+            <objects>
+                <navigationController id="R0h-gI-xLt" userLabel="Controller AppVentas" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TBz-vP-gMT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="f7R-sz-WVI" kind="relationship" relationship="rootViewController" id="tuc-dn-ucY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AvM-mT-DXz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="191" y="1434"/>
         </scene>
         <!--Sinóptico-->
         <scene sceneID="C4n-Xl-7S0">
@@ -392,10 +513,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lox-lJ-e0u" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="577" y="939"/>
+            <point key="canvasLocation" x="608" y="779"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Oferta" width="317" height="333"/>
+        <image name="Ofertas" width="317" height="333"/>
+        <image name="Pedidos" width="317" height="333"/>
+        <image name="Productos" width="317" height="333"/>
         <image name="logoTRH" width="75" height="30"/>
         <image name="logoTRHLiege" width="82" height="30"/>
     </resources>
