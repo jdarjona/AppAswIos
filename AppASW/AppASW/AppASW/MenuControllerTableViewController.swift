@@ -25,7 +25,8 @@ class MenuControllerTableViewController: UITableViewController {
         super.viewDidLoad()
         
         itemMenu.append(Menu(Menu: "Monitor Carga", Segue: "MonitorizacionCarga"))
-        itemMenu.append(Menu(Menu: "Sinótico", Segue: "SinopticoFabrica"))
+        itemMenu.append(Menu(Menu: "Sinóptico", Segue: "SinopticoFabrica"))
+        itemMenu.append(Menu(Menu: "AppVentas", Segue: "OfertaVenta"))
         
     }
     
