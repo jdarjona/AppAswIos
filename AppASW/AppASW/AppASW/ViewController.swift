@@ -341,13 +341,13 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         
         switch item.tag {
         case 0:
-            datos.basicURL = "http://192.168.1.2/WSTRH/%@"
+            ManagerJson.basicURL = "http://192.168.1.2/WSTRH/%@"
           
         case 1:
-            datos.basicURL = "http://intranet.trh-be.com/WSTRH/%@"
+            ManagerJson.basicURL = "http://intranet.trh-be.com/WSTRH/%@"
             
         default:
-            datos.basicURL = "http://192.168.1.2/WSTRH/%@"
+            ManagerJson.basicURL = "http://192.168.1.2/WSTRH/%@"
         }
         getListadoMonitorizacion()
     }

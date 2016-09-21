@@ -19,6 +19,8 @@
 		2E964A821D295CAA00F2236D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E964A801D295CAA00F2236D /* LaunchScreen.storyboard */; };
 		2E964A8D1D295CAB00F2236D /* AppASWTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E964A8C1D295CAB00F2236D /* AppASWTests.swift */; };
 		2E964A981D295CAB00F2236D /* AppASWUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E964A971D295CAB00F2236D /* AppASWUITests.swift */; };
+		2EA205F51D92C63F00EBE769 /* ManagerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA205F31D92C63F00EBE769 /* ManagerJson.swift */; };
+		2EA205F61D92C63F00EBE769 /* ManagerLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA205F41D92C63F00EBE769 /* ManagerLogin.swift */; };
 		2EABC6091D646E6E00845219 /* DetallePedidoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EABC6081D646E6E00845219 /* DetallePedidoTableViewCell.swift */; };
 		2EABC60B1D646FD400845219 /* DetallePedidoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EABC60A1D646FD400845219 /* DetallePedidoViewController.swift */; };
 		2ED308821D2BBD0E007E77F4 /* MonitorCarga.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED308811D2BBD0E007E77F4 /* MonitorCarga.swift */; };
@@ -73,6 +75,8 @@
 		2E964A931D295CAB00F2236D /* AppASWUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppASWUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E964A971D295CAB00F2236D /* AppASWUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppASWUITests.swift; sourceTree = "<group>"; };
 		2E964A991D295CAB00F2236D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2EA205F31D92C63F00EBE769 /* ManagerJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerJson.swift; sourceTree = "<group>"; };
+		2EA205F41D92C63F00EBE769 /* ManagerLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerLogin.swift; sourceTree = "<group>"; };
 		2EABC6081D646E6E00845219 /* DetallePedidoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetallePedidoTableViewCell.swift; sourceTree = "<group>"; };
 		2EABC60A1D646FD400845219 /* DetallePedidoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetallePedidoViewController.swift; sourceTree = "<group>"; };
 		2ED308811D2BBD0E007E77F4 /* MonitorCarga.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitorCarga.swift; sourceTree = "<group>"; };
@@ -206,6 +210,8 @@
 		2ED308801D2BBCD0007E77F4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2EA205F31D92C63F00EBE769 /* ManagerJson.swift */,
+				2EA205F41D92C63F00EBE769 /* ManagerLogin.swift */,
 				833DFE301D9154530077F8E9 /* LoginViewControler.swift */,
 				2E964A791D295CAA00F2236D /* ViewController.swift */,
 				2EE00D101D2D58E000D29DAD /* AccesoDatos.swift */,
@@ -515,8 +521,10 @@
 				2E182FDE1D787775007F7788 /* CustomSideMenuController.swift in Sources */,
 				2E964A7A1D295CAA00F2236D /* ViewController.swift in Sources */,
 				8374F37E1D928A0100E6D00E /* SegueMenuController.swift in Sources */,
+				2EA205F61D92C63F00EBE769 /* ManagerLogin.swift in Sources */,
 				833DFE311D9154530077F8E9 /* LoginViewControler.swift in Sources */,
 				2EABC60B1D646FD400845219 /* DetallePedidoViewController.swift in Sources */,
+				2EA205F51D92C63F00EBE769 /* ManagerJson.swift in Sources */,
 				2EDF25711D2E698B0044BA31 /* PedidoVenta.swift in Sources */,
 				2E964A781D295CAA00F2236D /* AppDelegate.swift in Sources */,
 				2E8D5DAB1D2AA93200E402F8 /* MonitorTableViewCell.swift in Sources */,
