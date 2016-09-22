@@ -26,7 +26,7 @@
                   moduleName = "AppASW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Administrador/Documents/GitHub/AppAswIos2/AppASW/AppASW/AppASW/OfertaVenta.swift"
-                  timestampString = "496233639.586406"
+                  timestampString = "496241396.976859"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -41,7 +41,7 @@
                   moduleName = "AppASW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Administrador/Documents/GitHub/AppAswIos2/AppASW/AppASW/AppASW/OfertaVenta.swift"
-                  timestampString = "496233639.586601"
+                  timestampString = "496241396.977049"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "94"
@@ -411,6 +411,52 @@
             endingLineNumber = "97"
             landmarkName = "getOferta(_:result:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppASW/AppASW/ListadoOfertasViewController.swift"
+            timestampString = "496237615.916855"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "6"
+            endingLineNumber = "6">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AppASW.ListadoOfertasViewController.__deallocating_deinit"
+                  moduleName = "AppASW"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Administrador/Documents/GitHub/AppAswIos2/AppASW/AppASW/AppASW/ListadoOfertasViewController.swift"
+                  timestampString = "496238428.651263"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AppASW.ListadoOfertasViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.NSBundle&gt;) -&gt; AppASW.ListadoOfertasViewController"
+                  moduleName = "AppASW"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Administrador/Documents/GitHub/AppAswIos2/AppASW/AppASW/AppASW/ListadoOfertasViewController.swift"
+                  timestampString = "496238428.651395"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "107">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
