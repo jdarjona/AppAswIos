@@ -12,6 +12,7 @@ import Foundation
 public class ManagerLogin{
 
     static public var bodyStr: String = ""
+    static public var token:String = ""
 
     static public func getlogin(user:String, password:String,result:(result:Bool)->(Void)) {
         
@@ -55,7 +56,7 @@ public class ManagerLogin{
                         let tokenDictionary:NSDictionary = try NSJSONSerialization.JSONObjectWithData(unwrappedData, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                         
                         // Get the token
-                        let token:String = tokenDictionary["access_token"] as! String
+                        self.token = tokenDictionary["access_token"] as! String
                         //flag=true
                         print("------")
                         print(token)
