@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E0476431D93D325007ED82D /* Almacenes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0476421D93D325007ED82D /* Almacenes.swift */; };
+		2E0476451D93D454007ED82D /* Productos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0476441D93D454007ED82D /* Productos.swift */; };
+		2E0476471D93D6E6007ED82D /* Clientes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0476461D93D6E6007ED82D /* Clientes.swift */; };
+		2E0476491D93D9B5007ED82D /* DireccionesEnvio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0476481D93D9B5007ED82D /* DireccionesEnvio.swift */; };
+		2E04764B1D93DB6A007ED82D /* PostCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E04764A1D93DB6A007ED82D /* PostCode.swift */; };
 		2E182FDE1D787775007F7788 /* CustomSideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E182FDD1D787775007F7788 /* CustomSideMenuController.swift */; };
 		2E4F60B41D795F590021ADF4 /* MenuControllerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4F60B31D795F590021ADF4 /* MenuControllerTableViewController.swift */; };
 		2E4F60B61D7970F70021ADF4 /* SinoticoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4F60B51D7970F70021ADF4 /* SinoticoViewController.swift */; };
@@ -21,6 +26,7 @@
 		2E964A981D295CAB00F2236D /* AppASWUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E964A971D295CAB00F2236D /* AppASWUITests.swift */; };
 		2EA205F51D92C63F00EBE769 /* ManagerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA205F31D92C63F00EBE769 /* ManagerJson.swift */; };
 		2EA205F61D92C63F00EBE769 /* ManagerLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA205F41D92C63F00EBE769 /* ManagerLogin.swift */; };
+		2EA205F81D92CE9300EBE769 /* ManagerVentas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA205F71D92CE9200EBE769 /* ManagerVentas.swift */; };
 		2EABC6091D646E6E00845219 /* DetallePedidoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EABC6081D646E6E00845219 /* DetallePedidoTableViewCell.swift */; };
 		2EABC60B1D646FD400845219 /* DetallePedidoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EABC60A1D646FD400845219 /* DetallePedidoViewController.swift */; };
 		2ED308821D2BBD0E007E77F4 /* MonitorCarga.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED308811D2BBD0E007E77F4 /* MonitorCarga.swift */; };
@@ -57,6 +63,11 @@
 
 /* Begin PBXFileReference section */
 		24C06766D804CD14824ACB1F /* Pods_AppASWTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppASWTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E0476421D93D325007ED82D /* Almacenes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Almacenes.swift; sourceTree = "<group>"; };
+		2E0476441D93D454007ED82D /* Productos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Productos.swift; sourceTree = "<group>"; };
+		2E0476461D93D6E6007ED82D /* Clientes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clientes.swift; sourceTree = "<group>"; };
+		2E0476481D93D9B5007ED82D /* DireccionesEnvio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DireccionesEnvio.swift; sourceTree = "<group>"; };
+		2E04764A1D93DB6A007ED82D /* PostCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCode.swift; sourceTree = "<group>"; };
 		2E182FDD1D787775007F7788 /* CustomSideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSideMenuController.swift; sourceTree = "<group>"; };
 		2E4F60B31D795F590021ADF4 /* MenuControllerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuControllerTableViewController.swift; sourceTree = "<group>"; };
 		2E4F60B51D7970F70021ADF4 /* SinoticoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinoticoViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +88,7 @@
 		2E964A991D295CAB00F2236D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EA205F31D92C63F00EBE769 /* ManagerJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerJson.swift; sourceTree = "<group>"; };
 		2EA205F41D92C63F00EBE769 /* ManagerLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerLogin.swift; sourceTree = "<group>"; };
+		2EA205F71D92CE9200EBE769 /* ManagerVentas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerVentas.swift; sourceTree = "<group>"; };
 		2EABC6081D646E6E00845219 /* DetallePedidoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetallePedidoTableViewCell.swift; sourceTree = "<group>"; };
 		2EABC60A1D646FD400845219 /* DetallePedidoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetallePedidoViewController.swift; sourceTree = "<group>"; };
 		2ED308811D2BBD0E007E77F4 /* MonitorCarga.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitorCarga.swift; sourceTree = "<group>"; };
@@ -203,6 +215,11 @@
 				2EDF25701D2E698A0044BA31 /* PedidoVenta.swift */,
 				2E4F60B91D797E540021ADF4 /* SinopticoFabrica.swift */,
 				833DFE2E1D9023AD0077F8E9 /* OfertaVenta.swift */,
+				2E0476421D93D325007ED82D /* Almacenes.swift */,
+				2E0476441D93D454007ED82D /* Productos.swift */,
+				2E0476461D93D6E6007ED82D /* Clientes.swift */,
+				2E0476481D93D9B5007ED82D /* DireccionesEnvio.swift */,
+				2E04764A1D93DB6A007ED82D /* PostCode.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -221,6 +238,7 @@
 				2E4F60B51D7970F70021ADF4 /* SinoticoViewController.swift */,
 				833DFE381D9180C40077F8E9 /* MenuVentasViewController.swift */,
 				8374F37D1D928A0100E6D00E /* SegueMenuController.swift */,
+				2EA205F71D92CE9200EBE769 /* ManagerVentas.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -523,12 +541,17 @@
 				8374F37E1D928A0100E6D00E /* SegueMenuController.swift in Sources */,
 				2EA205F61D92C63F00EBE769 /* ManagerLogin.swift in Sources */,
 				833DFE311D9154530077F8E9 /* LoginViewControler.swift in Sources */,
+				2E0476451D93D454007ED82D /* Productos.swift in Sources */,
 				2EABC60B1D646FD400845219 /* DetallePedidoViewController.swift in Sources */,
+				2E04764B1D93DB6A007ED82D /* PostCode.swift in Sources */,
 				2EA205F51D92C63F00EBE769 /* ManagerJson.swift in Sources */,
 				2EDF25711D2E698B0044BA31 /* PedidoVenta.swift in Sources */,
 				2E964A781D295CAA00F2236D /* AppDelegate.swift in Sources */,
+				2E0476491D93D9B5007ED82D /* DireccionesEnvio.swift in Sources */,
 				2E8D5DAB1D2AA93200E402F8 /* MonitorTableViewCell.swift in Sources */,
 				2E4F60B41D795F590021ADF4 /* MenuControllerTableViewController.swift in Sources */,
+				2E0476431D93D325007ED82D /* Almacenes.swift in Sources */,
+				2E0476471D93D6E6007ED82D /* Clientes.swift in Sources */,
 				2ED308821D2BBD0E007E77F4 /* MonitorCarga.swift in Sources */,
 				2EABC6091D646E6E00845219 /* DetallePedidoTableViewCell.swift in Sources */,
 				2EE00D111D2D58E000D29DAD /* AccesoDatos.swift in Sources */,
@@ -536,6 +559,7 @@
 				2E4F60BA1D797E540021ADF4 /* SinopticoFabrica.swift in Sources */,
 				2E4F60B61D7970F70021ADF4 /* SinoticoViewController.swift in Sources */,
 				833DFE391D9180C40077F8E9 /* MenuVentasViewController.swift in Sources */,
+				2EA205F81D92CE9300EBE769 /* ManagerVentas.swift in Sources */,
 				833DFE2F1D9023AD0077F8E9 /* OfertaVenta.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

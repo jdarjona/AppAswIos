@@ -18,12 +18,18 @@ public class ManagerJson {
         
         
         let urlAPI = String(format: basicURL, Url)
-        let session = NSURLSession.sharedSession()
+        
         let url = NSURL(string: urlAPI)!
-        //result = [T]()
+        
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        request.setValue("Bearer \(ManagerLogin.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let session = NSURLSession.sharedSession()
         
         // Make the POST call and handle it in a completion handler
-        session.dataTaskWithURL(url, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+        session.dataTaskWithRequest(request, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             // Make sure we get an OK response
             
             guard let realResponse = response as? NSHTTPURLResponse where
@@ -54,14 +60,15 @@ public class ManagerJson {
     static func getJson(Url:String,DatosCallBack:(json:String)->()) -> () {
         
         let urlAPI = String(format: basicURL, Url)
-        let session = NSURLSession.sharedSession()
-        
-        //let urlDefinitva = String(urlAPI.characters.map { $0 == "/" ? "_" : $0 })
         let url = NSURL(string: urlAPI)!
-        //result = [T]()
         
-        // Make the POST call and handle it in a completion handler
-        session.dataTaskWithURL(url, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        request.setValue("Bearer \(ManagerLogin.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let session = NSURLSession.sharedSession()
+        session.dataTaskWithRequest(request, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             // Make sure we get an OK response
             
             guard let realResponse = response as? NSHTTPURLResponse where
@@ -87,7 +94,89 @@ public class ManagerJson {
         
     }
     
+    static func postJson(Url:String,DatosCallBack:(json:String)->()) -> () {
+        
+        let urlAPI = String(format: basicURL, Url)
+        let url = NSURL(string: urlAPI)!
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.setValue("Bearer \(ManagerLogin.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let session = NSURLSession.sharedSession()
+        session.dataTaskWithRequest(request, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            // Make sure we get an OK response
+            
+            guard let realResponse = response as? NSHTTPURLResponse where
+                realResponse.statusCode == 200 else {
+                    print("Not a 200 response")
+                    return
+            }
+            
+            // Read the JSON
+            do {
+                if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+                    
+                    
+                    let dataJSON = ipString as String
+                    DatosCallBack(json:dataJSON)
+                    
+                    
+                }
+            } catch {
+                print("bad things happened")
+            }
+        }).resume();
+        
+    }
+    static public func updateJson<T where T:EVObject>(dato: T, Url: String, DatosCallBack:(json:String) -> Void) -> () {
+    
+       // let urlAPI = String(format: basicURL, Url)
+        //let session = NSURLSession.sharedSession()
+        //let url = NSURL(string: urlAPI)!
+        
+        self.bodyStr =  dato.toJsonString()
+        
+        // Setup the request
+        //let myURL = NSURL(string: Url)!
+        let urlAPI = String(format: basicURL, Url)
+        let myURL = NSURL(string: urlAPI)!
 
+        let request = NSMutableURLRequest(URL: myURL)
+        request.HTTPMethod = "PUT"
+        request.setValue("Bearer \(ManagerLogin.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        //request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.HTTPBody = bodyStr.dataUsingEncoding(NSUTF8StringEncoding)!
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            (data, response, error) -> Void in
+            if let unwrappedData = data {
+                print(unwrappedData)
+                print("------")
+                print(data)
+                print("------")
+        
+                do {
+                    if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+                        
+                        
+                        let dataJSON = ipString as String
+                        DatosCallBack(json:dataJSON)
+                        
+                        
+                    }
 
-
+                }
+                catch {
+                
+                }
+            }
+        
+        }
+        
+            task.resume()
+            
+        }
 }
