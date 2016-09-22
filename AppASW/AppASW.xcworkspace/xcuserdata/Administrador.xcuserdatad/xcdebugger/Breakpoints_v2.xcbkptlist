@@ -25,8 +25,8 @@
                   symbolName = "AppASW.Sales_Quote_Subform_ws.__ivar_destroyer"
                   moduleName = "AppASW"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Administrador/Documents/GitHub/AppAswIos/AppASW/AppASW/AppASW/OfertaVenta.swift"
-                  timestampString = "496156976.918079"
+                  urlString = "file:///Users/Administrador/Documents/GitHub/AppAswIos2/AppASW/AppASW/AppASW/OfertaVenta.swift"
+                  timestampString = "496233639.586406"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -40,8 +40,8 @@
                   symbolName = "AppASW.Sales_Quote_Subform_ws.init () -&gt; AppASW.Sales_Quote_Subform_ws"
                   moduleName = "AppASW"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Administrador/Documents/GitHub/AppAswIos/AppASW/AppASW/AppASW/OfertaVenta.swift"
-                  timestampString = "496156976.918878"
+                  urlString = "file:///Users/Administrador/Documents/GitHub/AppAswIos2/AppASW/AppASW/AppASW/OfertaVenta.swift"
+                  timestampString = "496233639.586601"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "94"
@@ -126,9 +126,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "getJson(_:DatosCallBack:)"
-            landmarkType = "5">
+            endingLineNumber = "192">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -174,9 +172,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "189"
-            endingLineNumber = "189"
-            landmarkName = "getJson(_:DatosCallBack:)"
-            landmarkType = "5">
+            endingLineNumber = "189">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -222,9 +218,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "getOferta(_:result:)"
-            landmarkType = "5">
+            endingLineNumber = "252">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -239,7 +233,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "44"
             endingLineNumber = "44"
-            landmarkName = "getlogin(_:password:result:)"
+            landmarkName = "isConnetedToNetWork()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -255,7 +249,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "68"
             endingLineNumber = "68"
-            landmarkName = "getlogin(_:password:result:)"
+            landmarkName = "getListMonitorizacion(_:)"
             landmarkType = "5">
             <Locations>
                <Location
@@ -303,7 +297,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "70"
             endingLineNumber = "70"
-            landmarkName = "getlogin(_:password:result:)"
+            landmarkName = "getListMonitorizacion(_:)"
             landmarkType = "5">
             <Locations>
                <Location
@@ -351,7 +345,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "93"
             endingLineNumber = "93"
-            landmarkName = "getlogin(_:password:result:)"
+            landmarkName = "getOferta(_:result:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -367,8 +361,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "114"
             endingLineNumber = "114"
-            landmarkName = "getlogin(_:password:result:)"
-            landmarkType = "5">
+            landmarkName = "AccesoDatos"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -383,8 +377,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "117"
             endingLineNumber = "117"
-            landmarkName = "getlogin(_:password:result:)"
-            landmarkType = "5">
+            landmarkName = "AccesoDatos"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -399,7 +393,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "71"
             endingLineNumber = "71"
-            landmarkName = "getlogin(_:password:result:)"
+            landmarkName = "getListMonitorizacion(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -415,23 +409,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "97"
             endingLineNumber = "97"
-            landmarkName = "getlogin(_:password:result:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AppASW/AppASW/LoginViewControler.swift"
-            timestampString = "496141131.046331"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "AceptarLoginTouchUpInside(_:)"
+            landmarkName = "getOferta(_:result:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -51,6 +51,16 @@ class MenuControllerTableViewController: UITableViewController {
         sideMenuController?.performSegueWithIdentifier(itemMenu[indexPath.row].Segue, sender: nil)
         previousIndex = indexPath
     }
+    
+//    override func viewWillAppear(animated: Bool) {
+//        if (PFUser.currentUser() == nil) {
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                
+//                let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Login") as! UIViewController
+//                self.presentViewController(viewController, animated: true, completion: nil)
+//            })
+//        }
+//    }
 
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

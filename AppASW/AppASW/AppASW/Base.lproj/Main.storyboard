@@ -207,7 +207,7 @@
         <!--Custom Side Menu Controller-->
         <scene sceneID="x9X-eK-Ig7">
             <objects>
-                <viewController id="M8c-wc-C2E" customClass="CustomSideMenuController" customModule="AppASW" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuLateral" id="M8c-wc-C2E" customClass="CustomSideMenuController" customModule="AppASW" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Sbx-J5-upo">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -305,7 +305,6 @@
                     <connections>
                         <outlet property="passwordTextField" destination="Zx2-sA-LYv" id="yzc-m8-Jp5"/>
                         <outlet property="usuarioTextField" destination="yYL-Jy-AYr" id="4gF-Wq-ICQ"/>
-                        <segue destination="M8c-wc-C2E" kind="push" identifier="Login" customClass="SegueMenuController" customModule="AppASW" customModuleProvider="target" id="H9f-Ft-ceu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a6b-cy-cYw" userLabel="First Responder" sceneMemberID="firstResponder"/>

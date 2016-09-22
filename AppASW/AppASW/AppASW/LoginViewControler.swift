@@ -22,41 +22,59 @@ class LoginViewControler:UIViewController{
     
     @IBAction func AceptarLoginTouchUpInside(sender: UIButton) {
         
+        let usuario: String = self.usuarioTextField.text!
+        let password: String = self.passwordTextField.text!
         
+        let spinner: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 150, 150)) as UIActivityIndicatorView
+        spinner.startAnimating()
+        
+        if usuario != "" || password != "" {
             
-            
-        ManagerLogin.getlogin(self.usuarioTextField.text!, password: self.passwordTextField.text!,result: {(result: Bool)->Void in
-            
-            dispatch_async(dispatch_get_main_queue(), {
+            ManagerLogin.getlogin(usuario, password: password,result: {(result: Bool)->Void in
+
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MenuLateral")
+                    self.presentViewController(viewController, animated: true, completion: nil)
+                })
                 
-                if result{
-                    self.performSegueWithIdentifier("Login", sender: self)
-                }else{
-                    let alertController = UIAlertController(title: "Autentificación", message:
-                        "No Autorizada", preferredStyle: UIAlertControllerStyle.Alert)
-                    alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    
+//                    spinner.stopAnimating()
+//                    
+//                    if result{
+//                        self.performSegueWithIdentifier("Login", sender: self)
+//                    }else{
+//                        let alertView = UIAlertController(title: "Error en Login",
+//                        message: "Usuario o Password incorrectos." as String, preferredStyle:.Alert)
+//                        let okAction = UIAlertAction(title: "Intentelo de nuevo!", style: .Default, handler: nil)
+//                        alertView.addAction(okAction)
+//                        self.presentViewController(alertView, animated: true, completion: nil)
+//                    }
+//                })
             })
-        })
             
-        
-        
+        }else{
+            
+            let alertView = UIAlertController(title: "Error en Login",
+                                              message: "Usuario o Password incorrectos." as String, preferredStyle:.Alert)
+            let okAction = UIAlertAction(title: "Intentelo de nuevo!", style: .Default, handler: nil)
+            alertView.addAction(okAction)
+            self.presentViewController(alertView, animated: true, completion: nil)
+            
+        }
         
     }
-    
-    /*override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        print("No ze que aze ezto")
-        return true
 
-    }
-*/
-    
-    /*override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        
-        
-
-    }*/
 }
 
