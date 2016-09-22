@@ -60,6 +60,23 @@ public class ManagerVentas {
     
     }
     
+    static public func createOferta(codCliente:String, codAlmacen: String, result:(result: OfertaVenta)->Void)->Void {
+        
+        var url = "api/Ofertas?codCliente=%@&codAlmacen=%@"
+        url = String(format: url, codCliente, codAlmacen)
+        ManagerJson.getJson(url ,DatosCallBack:{(json:String)->Void in
+            
+            let oferta = OfertaVenta(json:json)
+            
+            result(result:oferta)
+        })
+        
+        
+        
+        
+    }
+
+    
 // MARK: Clientes
     
     static public func getClientes( Result:(result: [Clientes])->Void) ->Void{

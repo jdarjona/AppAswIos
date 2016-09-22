@@ -94,7 +94,42 @@ public class ManagerJson {
         
     }
     
-
+    static func postJson(Url:String,DatosCallBack:(json:String)->()) -> () {
+        
+        let urlAPI = String(format: basicURL, Url)
+        let url = NSURL(string: urlAPI)!
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.setValue("Bearer \(ManagerLogin.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let session = NSURLSession.sharedSession()
+        session.dataTaskWithRequest(request, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            // Make sure we get an OK response
+            
+            guard let realResponse = response as? NSHTTPURLResponse where
+                realResponse.statusCode == 200 else {
+                    print("Not a 200 response")
+                    return
+            }
+            
+            // Read the JSON
+            do {
+                if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+                    
+                    
+                    let dataJSON = ipString as String
+                    DatosCallBack(json:dataJSON)
+                    
+                    
+                }
+            } catch {
+                print("bad things happened")
+            }
+        }).resume();
+        
+    }
     static public func updateJson<T where T:EVObject>(dato: T, Url: String, DatosCallBack:(json:String) -> Void) -> () {
     
        // let urlAPI = String(format: basicURL, Url)
