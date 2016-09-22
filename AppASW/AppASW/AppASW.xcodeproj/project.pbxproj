@@ -21,6 +21,7 @@
 		2E964A981D295CAB00F2236D /* AppASWUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E964A971D295CAB00F2236D /* AppASWUITests.swift */; };
 		2EA205F51D92C63F00EBE769 /* ManagerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA205F31D92C63F00EBE769 /* ManagerJson.swift */; };
 		2EA205F61D92C63F00EBE769 /* ManagerLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA205F41D92C63F00EBE769 /* ManagerLogin.swift */; };
+		2EA205F81D92CE9300EBE769 /* ManagerVentas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA205F71D92CE9200EBE769 /* ManagerVentas.swift */; };
 		2EABC6091D646E6E00845219 /* DetallePedidoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EABC6081D646E6E00845219 /* DetallePedidoTableViewCell.swift */; };
 		2EABC60B1D646FD400845219 /* DetallePedidoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EABC60A1D646FD400845219 /* DetallePedidoViewController.swift */; };
 		2ED308821D2BBD0E007E77F4 /* MonitorCarga.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED308811D2BBD0E007E77F4 /* MonitorCarga.swift */; };
@@ -77,6 +78,7 @@
 		2E964A991D295CAB00F2236D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EA205F31D92C63F00EBE769 /* ManagerJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerJson.swift; sourceTree = "<group>"; };
 		2EA205F41D92C63F00EBE769 /* ManagerLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerLogin.swift; sourceTree = "<group>"; };
+		2EA205F71D92CE9200EBE769 /* ManagerVentas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerVentas.swift; sourceTree = "<group>"; };
 		2EABC6081D646E6E00845219 /* DetallePedidoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetallePedidoTableViewCell.swift; sourceTree = "<group>"; };
 		2EABC60A1D646FD400845219 /* DetallePedidoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetallePedidoViewController.swift; sourceTree = "<group>"; };
 		2ED308811D2BBD0E007E77F4 /* MonitorCarga.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitorCarga.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				2E4F60B51D7970F70021ADF4 /* SinoticoViewController.swift */,
 				833DFE381D9180C40077F8E9 /* MenuVentasViewController.swift */,
 				8374F37D1D928A0100E6D00E /* SegueMenuController.swift */,
+				2EA205F71D92CE9200EBE769 /* ManagerVentas.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				2E4F60BA1D797E540021ADF4 /* SinopticoFabrica.swift in Sources */,
 				2E4F60B61D7970F70021ADF4 /* SinoticoViewController.swift in Sources */,
 				833DFE391D9180C40077F8E9 /* MenuVentasViewController.swift in Sources */,
+				2EA205F81D92CE9300EBE769 /* ManagerVentas.swift in Sources */,
 				833DFE2F1D9023AD0077F8E9 /* OfertaVenta.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

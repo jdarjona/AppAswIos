@@ -88,6 +88,49 @@ public class ManagerJson {
     }
     
 
+    static public func updateJson<T where T:EVObject>(dato: T, Url: String, DatosCallBack:(json:String) -> Void) -> () {
+    
+       // let urlAPI = String(format: basicURL, Url)
+        //let session = NSURLSession.sharedSession()
+        //let url = NSURL(string: urlAPI)!
+        
+        self.bodyStr = dato.toJsonString()
+        
+        // Setup the request
+        let myURL = NSURL(string: Url)!
+        let request = NSMutableURLRequest(URL: myURL)
+        request.HTTPMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        //request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.HTTPBody = bodyStr.dataUsingEncoding(NSUTF8StringEncoding)!
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            (data, response, error) -> Void in
+            if let unwrappedData = data {
+                print(unwrappedData)
+                print("------")
+                print(data)
+                print("------")
+        
+                do {
+                    if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+                        
+                        
+                        let dataJSON = ipString as String
+                        DatosCallBack(json:dataJSON)
+                        
+                        
+                    }
 
-
+                }
+                catch {
+                
+                }
+            }
+        
+        }
+        
+            task.resume()
+            
+        }
 }

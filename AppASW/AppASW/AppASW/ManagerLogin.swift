@@ -34,7 +34,7 @@ public class ManagerLogin{
             self.bodyStr = "grant_type=password&username=" + user + "&password=" + password;
             
             // Setup the request
-            let myURL = NSURL(string: "http://intranet.trh-be.com/WSTRH/Token")!
+            let myURL = NSURL(string: "http://192.168.1.2/WSTRH/Token")!
             let request = NSMutableURLRequest(URL: myURL)
             request.HTTPMethod = "POST"
             request.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
