@@ -8,8 +8,7 @@
 
 import UIKit
 import Firebase
-import AZDropdownMenu
-
+import DropDown
 
 class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegate,UITabBarDelegate{
 
@@ -17,7 +16,8 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     var listaMonitorizacion2: [MonitorCarga] = []
     var ref:FIRDatabaseReference!
     let notification = UILocalNotification()
-    var rightMenu: AZDropdownMenu?
+    //var rightMenu: AZDropdownMenu?
+    var rightMenu = DropDown()
     var ordernDescente = true
     var ordenSeleccionado = -1
     let datos:AccesoDatos = AccesoDatos()
@@ -37,84 +37,93 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.translucent = false
+        navigationController?.navigationBar.isTranslucent = false
         
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipes))
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipes))
-        leftSwipe.direction = .Left
-        rightSwipe.direction = .Right
+        leftSwipe.direction = .left
+        rightSwipe.direction = .right
         
         view.addGestureRecognizer(leftSwipe)
         view.addGestureRecognizer(rightSwipe)
         
         // Por defecto seleccionamos el primer tab
-        tabBarMonitorizacion.selectedItem = tabBarItemLiege
-        
+        if(LoginViewControler.empresaSeleccionada == "Liege"){
+            tabBarMonitorizacion.selectedItem = tabBarItemLiege
+            ManagerJson.empresaSeleccionada = .Liege
+        }else{
+            tabBarMonitorizacion.selectedItem = tabBarItemSevilla
+            ManagerJson.empresaSeleccionada = .Sevilla
+        }
         
         getListadoMonitorizacion()
         
-        self.ref = FIRDatabase.database().reference()
-        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
-        initFireBase()
+        //self.ref = FIRDatabase.database().reference()
+        let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        UIApplication.shared.registerUserNotificationSettings(notificationSettings)
+        //initFireBase()
         
         let menuTextos = ["Ordenar por fecha","Ordenar por estado", "Ordenar por cliente", "Ordenar por comercial"]
-        self.rightMenu = AZDropdownMenu(titles: menuTextos)
-        self.rightMenu!.cellTapHandler = { [weak self] (indexPath: NSIndexPath) -> Void in
-            if self!.ordenSeleccionado == indexPath.row {
+        //self.rightMenu = AZDropdownMenu(titles: menuTextos)
+        self.rightMenu.anchorView = view
+        self.rightMenu.dataSource = menuTextos
+        //self.rightMenu!.cellTapHandler =
+        
+        self.rightMenu.selectionAction = { [weak self] (index: Int, item: String)  in
+            if self!.ordenSeleccionado == index{
                 self!.ordernDescente = !self!.ordernDescente
             }else{
             
                 self!.ordernDescente = true
             }
-            self!.ordenSeleccionado = indexPath.row
-            switch indexPath.row {
+            self!.ordenSeleccionado = index
+            switch index{
             case 0:
                 if (self!.ordernDescente) {
-                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sort({ $0.Fecha_Carga_Requerida.compare($1.Fecha_Carga_Requerida) == .OrderedDescending })
+                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sorted(by: { $0.Fecha_Carga_Requerida.compare($1.Fecha_Carga_Requerida  ) == .orderedDescending })
                 }else{
-                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sort({ $0.Fecha_Carga_Requerida.compare($1.Fecha_Carga_Requerida) == .OrderedAscending })
+                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sorted(by: { $0.Fecha_Carga_Requerida.compare($1.Fecha_Carga_Requerida ) == .orderedAscending })
                 }
            case 1:
             if (self!.ordernDescente) {
-                 self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sort({ $0.Estado>$1.Estado})
+                 self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sorted(by: { $0.Estado>$1.Estado})
             }else{
-                 self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sort({ $0.Estado<$1.Estado})
+                 self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sorted(by: { $0.Estado<$1.Estado})
             }
 
                 
 
            case 2:
                 if (self!.ordernDescente) {
-                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sort({ $0.Nombre_Agencia>$1.Nombre_Agencia})
+                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sorted(by: { $0.Nombre_Agencia>$1.Nombre_Agencia})
                 }else{
-                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sort({ $0.Nombre_Agencia<$1.Nombre_Agencia})
+                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sorted(by: { $0.Nombre_Agencia<$1.Nombre_Agencia})
                 }
                 
             case 3:
                 if (self!.ordernDescente) {
-                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sort({ $0.inicialesComercial>$1.inicialesComercial})
+                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sorted(by: { $0.inicialesComercial>$1.inicialesComercial})
                 }else{
-                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sort({ $0.inicialesComercial<$1.inicialesComercial})
+                    self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sorted(by: { $0.inicialesComercial<$1.inicialesComercial})
                 }
 
                 
             default:
-                self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sort({ $0.Fecha_Carga_Requerida.compare($1.Fecha_Carga_Requerida) == .OrderedAscending })
+                self!.listaMonitorizacion2 = self!.listaMonitorizacion2.sorted(by: { $0.Fecha_Carga_Requerida.compare($1.Fecha_Carga_Requerida ) == .orderedAscending })
 
             }
             
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 
                 
                 
                 self!.tablaViewMonitorizacion.reloadData()
             })
-            print(indexPath.row)
+            print(index)
         }
         
-        let rightButton = UIBarButtonItem(title: "Orden", style: .Plain, target: self, action: #selector(ViewController.showRightDropdown))
+        let rightButton = UIBarButtonItem(title: "Orden", style: .plain, target: self, action: #selector(ViewController.showRightDropdown))
             //UIBarButtonItem(image: UIImage(named: "Orden"), style: .Plain, target: self, action: #selector(ViewController.showRightDropdown))
         
         self.navigationItem.rightBarButtonItem = rightButton
@@ -122,32 +131,35 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    
+    
     func showRightDropdown() {
-        if self.rightMenu?.isDescendantOfView(self.view) == true {
-            self.rightMenu?.hideMenu()
+        if self.rightMenu.isDescendant(of: self.view) == true {
+            self.rightMenu.hide() //hideMenu()
         } else {
-            self.rightMenu?.showMenuFromView(self.view)
+            self.rightMenu.show() // showMenuFromView(self.view)
         }
     }
     
     
-    func handleSwipes(sender:UISwipeGestureRecognizer) {
+    func handleSwipes(_ sender:UISwipeGestureRecognizer) {
         
-        if (sender.direction == .Left) {
+        if (sender.direction == .left) {
            
             if self.tabBarMonitorizacion.selectedItem !=  self.tabBarItemLiege {
                 self.tabBarMonitorizacion.selectedItem =  self.tabBarItemLiege
-                tabBar(self.tabBarMonitorizacion, didSelectItem: self.tabBarItemLiege)
+                tabBar(self.tabBarMonitorizacion, didSelect: self.tabBarItemLiege)
             }
             
             //self.tabBarMonitorizacion.selectedItem =  self.tabBarItemLiege
         }
         
-        if (sender.direction == .Right) {
+        if (sender.direction == .right) {
             
             if self.tabBarMonitorizacion.selectedItem !=  self.tabBarItemSevilla {
                 self.tabBarMonitorizacion.selectedItem =  self.tabBarItemSevilla
-                tabBar(self.tabBarMonitorizacion, didSelectItem: self.tabBarItemSevilla)
+                tabBar(self.tabBarMonitorizacion, didSelect: self.tabBarItemSevilla)
             }
             //self.tabBarMonitorizacion.selectedItem =  self.tabBarItemSevilla
          
@@ -180,7 +192,7 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
             print(error.localizedDescription)
         }*/
         
-        let refHandle = ref.child("Pedidos/TRH Liege").observeEventType(FIRDataEventType.ChildChanged, withBlock: { (snapshot) in
+        let refHandle = ref.child("Pedidos/TRH Liege").observe(FIRDataEventType.childChanged, with: { (snapshot) in
             let postDict = snapshot.value as! [String : AnyObject]
             print(postDict)
             
@@ -206,17 +218,18 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
                 
                 
             }
-            let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
-            if settings!.types == .None {
-                let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .Alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(ac, animated: true, completion: nil)
+            let settings = UIApplication.shared.currentUserNotificationSettings
+            if settings!.types == UIUserNotificationType() {
+                let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .alert)
+                
+               // ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(ac, animated: true, completion: nil)
                 return
             }
             
          
             
-            self.notification.fireDate = NSDate(timeIntervalSinceNow: 2)
+            self.notification.fireDate = Date(timeIntervalSinceNow: 2)
             self.notification.alertBody = NSString(format: "%@" , estado) as String
             self.notification.alertAction = NSString(format: "%@ %@", codigoPedido, estado) as String
             self.notification.alertTitle = NSString(format: "%@", codigoPedido) as String
@@ -226,7 +239,7 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
             self.notification.soundName = UILocalNotificationDefaultSoundName
             self.notification.userInfo = ["codPedido": codigoPedido, "estado" : estado]
             
-            UIApplication.sharedApplication().scheduleLocalNotification(self.notification)
+            UIApplication.shared.scheduleLocalNotification(self.notification)
            
             // ...
         })
@@ -239,7 +252,7 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
 
     // MARK: TableView
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //var numeroPedidoEnRuta = 0
         
         let pedidosEnRuta:[MonitorCarga]? = self.listaMonitorizacion2.filter({ $0.Estado == 6 })
@@ -253,8 +266,8 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
             }
         }
         
-        let fechaHoy = NSDate()
-        let pedidosPendienteRuta:[MonitorCarga]? = self.listaMonitorizacion2.filter({ fechaHoy.compare($0.Fecha_Carga_Requerida) == .OrderedDescending || fechaHoy.compare($0.Fecha_Carga_Requerida) == .OrderedSame })
+        let fechaHoy = Date()
+        let pedidosPendienteRuta:[MonitorCarga]? = self.listaMonitorizacion2.filter({ fechaHoy.compare($0.Fecha_Carga_Requerida as! Date) == .orderedDescending || fechaHoy.compare($0.Fecha_Carga_Requerida as! Date) == .orderedSame })
         
         //var numeroPedidoPendienteRuta = 0
         var tmPedidoPendienteRuta: Int = 0
@@ -274,24 +287,25 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "MonitorCell") as MonitorTableViewCell;
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("MonitorCell", forIndexPath: indexPath) as! MonitorTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MonitorCell", for: indexPath) as! MonitorTableViewCell
         
-        cell.codPedido = self.listaMonitorizacion2[indexPath.row].Cod__Agrupacion_Pedido
-        cell.codPedidoLabel?.text = NSString(format: "%@-%@", self.listaMonitorizacion2[indexPath.row].Cod__Agrupacion_Pedido,self.listaMonitorizacion2[indexPath.row].Cod__Pedido_Transporte) as String //self.listaMonitorizacion[indexPath.row]["Cod__Agrupacion_Pedido"] as? String
-        cell.clienteLabel?.text = self.listaMonitorizacion2[indexPath.row].Nombre_Agencia//self.listaMonitorizacion[indexPath.row]["Nombre_Agencia"] as? String
-        let inicialesComercial = self.listaMonitorizacion2[indexPath.row].inicialesComercial //self.listaMonitorizacion[indexPath.row]["inicialesComercial"] as? String
+        cell.codPedido = self.listaMonitorizacion2[(indexPath as NSIndexPath).row].Cod__Agrupacion_Pedido
+        cell.codPedidoLabel?.text = NSString(format: "%@-%@", self.listaMonitorizacion2[(indexPath as NSIndexPath).row].Cod__Agrupacion_Pedido,self.listaMonitorizacion2[(indexPath as NSIndexPath).row].Cod__Pedido_Transporte) as String //self.listaMonitorizacion[indexPath.row]["Cod__Agrupacion_Pedido"] as? String
+        cell.clienteLabel?.text = self.listaMonitorizacion2[(indexPath as NSIndexPath).row].Nombre_Agencia//self.listaMonitorizacion[indexPath.row]["Nombre_Agencia"] as? String
+        let inicialesComercial = self.listaMonitorizacion2[(indexPath as NSIndexPath).row].inicialesComercial //self.listaMonitorizacion[indexPath.row]["inicialesComercial"] as? String
         cell.comercialLabel?.text = inicialesComercial;
-        cell.estadoLabel?.text = self.listaMonitorizacion2[indexPath.row].estadoDescripcion //self.listaMonitorizacion[indexPath.row]["estadoDescripcion"] as? String
-        let estado: Int = self.listaMonitorizacion2[indexPath.row].Estado//(self.listaMonitorizacion[indexPath.row]["Estado"] as? Int)!
+        cell.estadoLabel?.text = self.listaMonitorizacion2[(indexPath as NSIndexPath).row].estadoDescripcion //self.listaMonitorizacion[indexPath.row]["estadoDescripcion"] as? String
+        let estado: Int = self.listaMonitorizacion2[(indexPath as NSIndexPath).row].Estado//(self.listaMonitorizacion[indexPath.row]["Estado"] as? Int)!
         cell.estadoLabel?.backgroundColor = colorEstado(estado)
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat="dd/MM/yy"
-        
-        cell.fechaLabel?.text = dateFormatter.stringFromDate(self.listaMonitorizacion2[indexPath.row].Fecha_Carga_Requerida)
+        //let fecha = dateFormatter.string(from: self.listaMonitorizacion2[(indexPath as NSIndexPath).row].Fecha_Carga_Requerida )
+
+        cell.fechaLabel?.text = dateFormatter.string(from: self.listaMonitorizacion2[(indexPath as NSIndexPath).row].Fecha_Carga_Requerida )
         
         /*
         let fechaCargaRequerida = self.listaMonitorizacion[indexPath.row]["Fecha_Carga_Requerida"] as? String
@@ -315,39 +329,35 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
         if let identicador = segue.identifier {
         
             if identicador == "DetallePedido" {
             
-                if let destinationVC = segue.destinationViewController as? DetallePedidoViewController {
+                if let destinationVC = segue.destination as? DetallePedidoViewController {
                     let celda = sender as! MonitorTableViewCell
                     destinationVC.datos = self.datos
                     destinationVC.codigoPedido = celda.codPedido
                 }
             }
-                
-            
         }
-        
-        
     }
+    
     // MARK: Tab
     
-    func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
         switch item.tag {
         case 0:
-            ManagerJson.basicURL = "http://192.168.1.2/WSTRH/%@"
+            ManagerJson.empresaSeleccionada = .Liege
           
         case 1:
-            ManagerJson.basicURL = "http://intranet.trh-be.com/WSTRH/%@"
+            ManagerJson.empresaSeleccionada = .Sevilla
             
         default:
-            ManagerJson.basicURL = "http://192.168.1.2/WSTRH/%@"
+            break
+
         }
         getListadoMonitorizacion()
     }
@@ -356,34 +366,34 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     // MARK: Fin Tab
 
     
-        func colorEstado(estado: Int ) -> UIColor{
+        func colorEstado(_ estado: Int ) -> UIColor{
     
         switch estado {
         case 0:
-            return UIColor.redColor()
+            return UIColor.red
             
         case 1:
-             return UIColor.redColor()
+             return UIColor.red
             
         case 2:
-             return UIColor.orangeColor()
+             return UIColor.orange
             
         case 3:
-             return UIColor.whiteColor()
+             return UIColor.white
             
             
         case 4:
-             return UIColor.whiteColor()
+             return UIColor.white
             
         case 5:
-             return UIColor.greenColor()
+             return UIColor.green
             
         case 6:
-             return UIColor.greenColor()
+             return UIColor.green
             
             
         default:
-             return UIColor.redColor()
+             return UIColor.red
         }
     
     }
@@ -395,9 +405,9 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
             datos.getListMonitorizacion({(result:[MonitorCarga])->Void in
         
         
-                self.listaMonitorizacion2 = result.sort({ $0.Fecha_Carga_Requerida.compare($1.Fecha_Carga_Requerida) == .OrderedAscending })
+                self.listaMonitorizacion2 = result.sorted(by: { $0.Fecha_Carga_Requerida.compare($1.Fecha_Carga_Requerida ) == .orderedAscending })
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     
                     
                     
@@ -409,33 +419,29 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
             
         
             })
-        
-        datos.getOferta("OV16/5454") { (result) in
-                    print(result)
-        }
     }
     
-    func setTitle(title:String, subtitle:String) -> UIView {
-        let titleLabel = UILabel(frame: CGRectMake(0, -5, 0, 0))
+    func setTitle(_ title:String, subtitle:String) -> UIView {
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: -5, width: 0, height: 0))
         
-        titleLabel.backgroundColor = UIColor.clearColor()
-        titleLabel.textColor = UIColor.grayColor()
-        titleLabel.font = UIFont.boldSystemFontOfSize(12)
-        titleLabel.textAlignment = .Center
+        titleLabel.backgroundColor = UIColor.clear
+        titleLabel.textColor = UIColor.gray
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        titleLabel.textAlignment = .center
         titleLabel.text = title
         titleLabel.sizeToFit()
         
-        let subtitleLabel = UILabel(frame: CGRectMake(0, 18, 0, 0))
-        subtitleLabel.textAlignment = .Center
-        subtitleLabel.backgroundColor = UIColor.clearColor()
-        subtitleLabel.textColor = UIColor.blackColor()
-        subtitleLabel.font = UIFont.systemFontOfSize(8)
+        let subtitleLabel = UILabel(frame: CGRect(x: 0, y: 18, width: 0, height: 0))
+        subtitleLabel.textAlignment = .center
+        subtitleLabel.backgroundColor = UIColor.clear
+        subtitleLabel.textColor = UIColor.black
+        subtitleLabel.font = UIFont.systemFont(ofSize: 8)
         subtitleLabel.text = subtitle
         subtitleLabel.sizeToFit()
         
-        let titleView = UIView(frame: CGRectMake(0, 0, max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), 30))
-        titleLabel.frame = CGRectMake(0, 0, max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), 15)
-        subtitleLabel.frame = CGRectMake(0, 15, max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), 28)
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), height: 30))
+        titleLabel.frame = CGRect(x: 0, y: 0, width: max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), height: 15)
+        subtitleLabel.frame = CGRect(x: 0, y: 15, width: max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), height: 28)
         titleView.addSubview(titleLabel)
         titleView.addSubview(subtitleLabel)
         

@@ -16,25 +16,19 @@ class MenuVentasViewController: UIViewController {
     @IBOutlet weak var listadoPedidos: UIButton!
     @IBOutlet weak var listadoProductos: UIButton!
     
-    var oferta:OfertaVenta = OfertaVenta()
+    
+    
+    @IBOutlet weak var ventasIndicatorview: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        
-        
-        ManagerVentas.getOferta("DEV-V16/0589") { (result) in
-            
-            self.oferta = result
-            
-            self.oferta.doble_DescargaField = true
-            
-            ManagerVentas.updateOferta(self.oferta, result: { (result) in
-                
-                self.oferta = result
-            })
-            
-        }
+//        self.ventasIndicatorview.startAnimating()
+//        ManagerVentas.initialize()
+//        self.ventasIndicatorview.stopAnimating()
     }
+    
+    
+    
+    
 }

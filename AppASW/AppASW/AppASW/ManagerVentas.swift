@@ -9,11 +9,50 @@
 import Foundation
 
 
-public class ManagerVentas {
+open class ManagerVentas {
 
 
+    static open var clientes:[Clientes] =  []
+    static open var pedidos:[PedidoVenta] =  []
+    static open var ofertas:[OfertaVenta] =  []
+    static open var almacenes:[Almacen] =  []
+    static open var contacto:[Contacto] = []
+    static open var direccionesEnvio:[DireccionesEnvio] =  []
+    static open var productos:[Productos] =  []
+    static open var postCode:[PostCode] = []
+    static open var nuevaOferta:OfertaVenta = OfertaVenta()
+
+    
 // MARK: Pedidos
-    static public func getPedido(codPedido:String, result:(result:PedidoVenta)->Void)->Void{
+    static func initialize(){
+        
+        getClientes { (result) in
+            self.clientes = result
+        }
+        
+        getPostCode { (result) in
+            self.postCode = result
+        }
+        
+//        getProductos {(result) in
+//            self.productos = result
+//        }
+        
+        getDireccionesEnvio {(result) in
+            self.direccionesEnvio = result
+        }
+        
+        getAlmacenes{(result) in
+            self.almacenes = result
+        }
+        getContactos{(result) in
+            self.contacto = result
+        }
+        
+    
+    }
+    
+    static open func getPedido(_ codPedido:String, result:@escaping (_ result:PedidoVenta)->Void)->Void{
         
         let codPedidoUrl = String(codPedido.characters.map { $0 == "/" ? "_" : $0 })
         var url = "api/Pedidos?codPedido=%@"
@@ -21,37 +60,37 @@ public class ManagerVentas {
         //let pedidoVenta: PedidoVenta = PedidoVenta()
         ManagerJson.getJson(url ,DatosCallBack:{(json:String)->Void in
             
-            let pedido = PedidoVenta(json:json)
+            let pedido = PedidoVenta()
             
-            result(result:pedido)
+            result(pedido)
         })
         
     }
     
 // MARK: Oferta
-    static public func getOferta(codOferta:String, result:(result:OfertaVenta)->Void)->Void{
+    static open func getOferta(_ codOferta:String, result:@escaping (_ result:OfertaVenta)->Void)->Void{
         
         let codOfertaUrl = String(codOferta)
         var url = "api/Ofertas?codOferta=%@"
-        url = String(format: url,codOfertaUrl)
+        url = String(format: url,codOfertaUrl!)
         //let pedidoVenta: PedidoVenta = PedidoVenta()
         ManagerJson.getJson(url ,DatosCallBack:{(json:String)->Void in
             
-            let oferta = OfertaVenta(json:json)
+            let oferta = OfertaVenta()
             
-            result(result:oferta)
+            result(oferta)
         })
         
     }
     
-    static public func updateOferta(oferta:OfertaVenta, result:(result:OfertaVenta)->Void)->Void {
+    static open func updateOferta(_ oferta:OfertaVenta, result:@escaping (_ result:OfertaVenta)->Void)->Void {
     
         let url = "api/Ofertas"
         
         ManagerJson.updateJson(oferta, Url: url, DatosCallBack: { (json:String) in
             
-            let oferta = OfertaVenta(json:json)
-            result(result:oferta)
+            let oferta = OfertaVenta()
+            result(oferta)
             
         })
     
@@ -60,32 +99,28 @@ public class ManagerVentas {
     
     }
     
-    static public func createOferta(codCliente:String, codAlmacen: String, result:(result: OfertaVenta)->Void)->Void {
+    static open func createOferta(_ codCliente:String, codAlmacen: String, result:@escaping (_ result: OfertaVenta)->Void)->Void {
         
         var url = "api/Ofertas?codCliente=%@&codAlmacen=%@"
         url = String(format: url, codCliente, codAlmacen)
         ManagerJson.getJson(url ,DatosCallBack:{(json:String)->Void in
             
-            let oferta = OfertaVenta(json:json)
+            let oferta = OfertaVenta()
             
-            result(result:oferta)
-        })
-        
-        
-        
-        
+            result(oferta)
+        })       
     }
 
     
 // MARK: Clientes
     
-    static public func getClientes( Result:(result: [Clientes])->Void) ->Void{
+    static open func getClientes( _ Result:@escaping (_ result: [Clientes])->Void) ->Void{
     
     
         let url = "api/Clientes"
         let clientes: Clientes = Clientes()
         ManagerJson.getList(clientes, Url: url) { (datosCallBack:[Clientes]) in
-            Result(result: datosCallBack)
+            Result(datosCallBack)
         }
     
     
@@ -93,13 +128,25 @@ public class ManagerVentas {
     
 // MARK: Almacenes
     
-    static public func getAlmacenes( Result:(result: [Almacenes])->Void) ->Void{
+    static open func getAlmacenes( _ Result:@escaping (_ result: [Almacen])->Void) ->Void{
         
         
         let url = "api/Almacenes"
-        let almacenes: Almacenes = Almacenes()
-        ManagerJson.getList(almacenes, Url: url) { (datosCallBack:[Almacenes]) in
-            Result(result: datosCallBack)
+        let almacenes: Almacen = Almacen()
+        ManagerJson.getList(almacenes, Url: url) { (datosCallBack:[Almacen]) in
+            Result(datosCallBack)
+        }
+        
+        
+    }
+// MARK: Contactos
+    static open func getContactos( _ Result:@escaping (_ result: [Contacto])->Void) ->Void{
+        
+        
+        let url = "api/Contactos"
+        let contactos: Contacto = Contacto()
+        ManagerJson.getList(contactos, Url: url) { (datosCallBack:[Contacto]) in
+            Result(datosCallBack)
         }
         
         
@@ -107,13 +154,13 @@ public class ManagerVentas {
     
 // MARK: DireccionesEnvio
     
-    static public func getDireccionesEnvio( Result:(result: [DireccionesEnvio])->Void) ->Void{
+    static open func getDireccionesEnvio( _ Result:@escaping (_ result: [DireccionesEnvio])->Void) ->Void{
         
         
         let url = "api/DireccionesEnvio"
         let direccionesEnvio: DireccionesEnvio = DireccionesEnvio()
         ManagerJson.getList(direccionesEnvio, Url: url) { (datosCallBack:[DireccionesEnvio]) in
-            Result(result: datosCallBack)
+            Result(datosCallBack)
         }
         
         
@@ -121,13 +168,13 @@ public class ManagerVentas {
 
  // MARK: Productos
     
-    static public func getDireccionesEnvio( Result:(result: [Productos])->Void) ->Void{
+    static open func getProductos( _ Result:@escaping (_ result: [Productos])->Void) ->Void{
         
         
         let url = "api/Productos"
         let productos: Productos = Productos()
         ManagerJson.getList(productos, Url: url) { (datosCallBack:[Productos]) in
-            Result(result: datosCallBack)
+            Result(datosCallBack)
         }
         
         
@@ -135,13 +182,13 @@ public class ManagerVentas {
 
 // MARK: PostCode
     
-    static public func getPostCode( Result:(result: [PostCode])->Void) ->Void{
+    static open func getPostCode( _ Result:@escaping (_ result: [PostCode])->Void) ->Void{
         
         
         let url = "api/PostCode"
         let postCode: PostCode = PostCode()
         ManagerJson.getList(postCode, Url: url) { (datosCallBack:[PostCode]) in
-            Result(result: datosCallBack)
+            Result(datosCallBack)
         }
         
         

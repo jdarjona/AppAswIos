@@ -44,7 +44,7 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
     
     // MARK: TableView
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if pedidoDetalle.SalesLines.count != 0{
             
@@ -59,12 +59,12 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
                 totalPrecio += linea.PrecioLineaTotal
             
             }
-            let numberFormatter = NSNumberFormatter()
-            numberFormatter.numberStyle = .DecimalStyle
-            let localizacion:NSLocale = NSLocale(localeIdentifier: "es_ES")
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            let localizacion:Locale = Locale(identifier: "es_ES")
             numberFormatter.locale = localizacion
             
-            self.navigationItem.titleView = setTitle(pedidoDetalle.Sell_to_Customer_Name, subtitle: NSString(format: "%d Tm, %@ €", totalTm , numberFormatter.stringFromNumber(totalPrecio)! ) as String)
+            self.navigationItem.titleView = setTitle(pedidoDetalle.Sell_to_Customer_Name, subtitle: (String(totalTm) + " Tm " +  String(totalPrecio) + " €") )//NSString(format: "%d Tm, %@ €", totalTm , (totalPrecio) ) as String )
         }
         
         
@@ -72,23 +72,23 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
         return pedidoDetalle.SalesLines.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("DetallePedidoCell", forIndexPath: indexPath) as! DetallePedidoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DetallePedidoCell", for: indexPath) as! DetallePedidoTableViewCell
        
-        let i = indexPath.row
+        let i = (indexPath as NSIndexPath).row
         
         cell.productoLabel.text = pedidoDetalle.SalesLines[i].Alias
         cell.caracteristicasLabel.text = pedidoDetalle.SalesLines[i].Description
        
-        let numberFormatter = NSNumberFormatter()
-        numberFormatter.numberStyle = .DecimalStyle
-        let localizacion:NSLocale = NSLocale(localeIdentifier: "es_ES")
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        let localizacion:Locale = Locale(identifier: "es_ES")
         numberFormatter.locale = localizacion
         
         let pesoKg = pedidoDetalle.SalesLines[i].Cantidad_KG
-        let peso = numberFormatter.stringFromNumber(pesoKg)//NSString(format: "%.2f", pesoKg) as String
-        cell.pesoLabel.text = NSString(format: "%@ Kg",peso!) as String
+        let peso = NSString(format: "%.2f", pesoKg) as String
+        cell.pesoLabel.text = NSString(format: "%@ Kg",peso) as String
         let numeroPaquetes = NSString(format: "%.0f", pedidoDetalle.SalesLines[i].Cantidad_PAQ) as String
         
         cell.paquetesLabel.text = numeroPaquetes
@@ -101,7 +101,7 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
     
     // FIN TableView
     
-    func getDetallePedido(codigoPedido:String) -> () {
+    func getDetallePedido(_ codigoPedido:String) -> () {
         
         //dispatch_async(dispatch_get_main_queue()) { [unowned self] in
             
@@ -111,7 +111,7 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
                 
                 self.pedidoDetalle = result
                 self.pedidoDetalle.SalesLines = self.pedidoDetalle.SalesLines.filter({$0.Cantidad_PAQ != 0})
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     
                      self.pedidoDetalleTableView.reloadData()
                 })
@@ -122,27 +122,27 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
             
         //}
     }
-    func setTitle(title:String, subtitle:String) -> UIView {
-        let titleLabel = UILabel(frame: CGRectMake(0, -5, 0, 0))
+    func setTitle(_ title:String, subtitle:String) -> UIView {
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: -5, width: 0, height: 0))
         
-        titleLabel.backgroundColor = UIColor.clearColor()
-        titleLabel.textColor = UIColor.grayColor()
-        titleLabel.font = UIFont.boldSystemFontOfSize(12)
-        titleLabel.textAlignment = .Left
+        titleLabel.backgroundColor = UIColor.clear
+        titleLabel.textColor = UIColor.gray
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        titleLabel.textAlignment = .left
         titleLabel.text = title
         titleLabel.sizeToFit()
         
-        let subtitleLabel = UILabel(frame: CGRectMake(0, 18, 0, 0))
-        subtitleLabel.textAlignment = .Left
-        subtitleLabel.backgroundColor = UIColor.clearColor()
-        subtitleLabel.textColor = UIColor.blackColor()
-        subtitleLabel.font = UIFont.systemFontOfSize(8)
+        let subtitleLabel = UILabel(frame: CGRect(x: 0, y: 18, width: 0, height: 0))
+        subtitleLabel.textAlignment = .left
+        subtitleLabel.backgroundColor = UIColor.clear
+        subtitleLabel.textColor = UIColor.black
+        subtitleLabel.font = UIFont.systemFont(ofSize: 8)
         subtitleLabel.text = subtitle
         subtitleLabel.sizeToFit()
         
-        let titleView = UIView(frame: CGRectMake(0, 0, max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), 30))
-        titleLabel.frame = CGRectMake(0, 0, max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), 15)
-        subtitleLabel.frame = CGRectMake(0, 15, max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), 28)
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), height: 30))
+        titleLabel.frame = CGRect(x: 0, y: 0, width: max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), height: 15)
+        subtitleLabel.frame = CGRect(x: 0, y: 15, width: max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), height: 28)
         titleView.addSubview(titleLabel)
         titleView.addSubview(subtitleLabel)
         

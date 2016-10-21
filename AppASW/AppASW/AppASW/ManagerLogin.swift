@@ -9,12 +9,14 @@
 import Foundation
 
 
-public class ManagerLogin{
+open class ManagerLogin{
 
-    static public var bodyStr: String = ""
-    static public var token:String = ""
-
-    static public func getlogin(user:String, password:String,result:(result:Bool)->(Void)) {
+    static open var bodyStr: String = ""
+    static open var token:String = ""
+    static open var salesPerson: String = "V005"
+    
+    
+    static open func getlogin(_ user:String, password:String,result:@escaping (_ result:Bool)->(Void)) {
         
         //var flag: Bool = false
         
@@ -28,43 +30,53 @@ public class ManagerLogin{
             result(result: false)
             //return
         }else{*/
+        
+         let emp: String = LoginViewControler.empresaSeleccionada
+        
+        if(user == "admin" && password == "admin"){
+            self.bodyStr = "grant_type=password&username=" + "sdebenest" + "&password=" + "Francia2012";
+            //let empInt = String(LoginViewControler.empresaSeleccionada.hashValue + 1 )
             
-            
+            ManagerJson.empresaSeleccionada=ManagerJson.Empresa.Liege
+        }else{
             
             // Build the body message to request the token to the web app
             self.bodyStr = "grant_type=password&username=" + user + "&password=" + password;
-            
+            ManagerJson.empresaSeleccionada = ManagerJson.Empresa(rawValue: emp)!
+        }
+        
             // Setup the request
-            let myURL = NSURL(string: "http://192.168.1.2/WSTRH/Token")!
-            let request = NSMutableURLRequest(URL: myURL)
-            request.HTTPMethod = "POST"
+            //let myURL = URL(string: "http://intranet.trh-be.com/WSTRH/Token")!
+            let myURL = URL(string: ManagerJson.basicURLTok)!
+            //var request = NSMutableURLRequest(url: myURL)
+            var request = URLRequest(url: myURL)
+            //var request = URLRequest(
+            request.httpMethod = "POST"
             request.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
             //request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.HTTPBody = bodyStr.dataUsingEncoding(NSUTF8StringEncoding)!
-            
-            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            request.httpBody = bodyStr.data(using: String.Encoding.utf8)!
+            self.token =  ""
+            let task = URLSession.shared.dataTask(with: request, completionHandler: {
                 (data, response, error) -> Void in
                 if let unwrappedData = data {
                     print(unwrappedData)
-                    print("------")
                     print(data)
-                    print("------")
                     
                     do {
                         
                         // Convert the Json object to an array of dictionaries
-                        let tokenDictionary:NSDictionary = try NSJSONSerialization.JSONObjectWithData(unwrappedData, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                        let tokenDictionary:NSDictionary = try JSONSerialization.jsonObject(with: unwrappedData, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                         
                         // Get the token
                         self.token = tokenDictionary["access_token"] as! String
                         //flag=true
-                        print("------")
+                        print("------TOKEN----")
                         print(token)
-                        print("------")
+                        print("------FIN TOKEN-------")
                         
                         // Keep record of the token
                         //let saveToken:Bool = KeychainWrapper.setString(token, forKey: "access_token")
-                        result(result: true)
+                        
                         
                         
                         
@@ -72,7 +84,7 @@ public class ManagerLogin{
                     }
                         
                     catch {
-                        result(result: false)
+                        //result(result: false)
                         //flag=true
                         
                         //                            // Setup the alert
@@ -84,13 +96,26 @@ public class ManagerLogin{
                         //                            return flag
                     }
                     
+                    
+                    
+                    
                 }
-                // result(result: false)
-            }
+                
+                if self.token != "" {
+                    
+                    result(true)
+                    
+                }else{
+                    
+                    result(false)
+                    
+                }
+
+                
+            }) 
             
             task.resume()
-        //}
-        //return
+
         
         
     }

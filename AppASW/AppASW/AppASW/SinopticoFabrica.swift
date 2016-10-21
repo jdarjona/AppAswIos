@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import EVReflection
+import AlamofireObjectMapper
+import ObjectMapper
 
-class SinopticoFabrica: EVObject {
+public class SinopticoFabrica {
     
     var IdMaquina:String = ""
     var CodOperario:String = ""
@@ -25,6 +26,27 @@ class SinopticoFabrica: EVObject {
     var PesoProducido:Double = 0
     var Rendimiento:Int = 0
     var SeccionMaquina:Int = 2
-
+    
+//    required public init?(map: Map){
+//        
+//    }
+//   
+//    public func mapping(map: Map) {
+//        
+//     IdMaquina <- map["IdMaquina"] //String = ""
+//     CodOperario <- map["CodOperario"] //String = ""
+//     Operario1 <- map["Operario1"] //String = ""
+//     Operario2 <- map["Operario2"] //String = ""
+//     UnidadMedida <- map["UnidadMedida"] //= ""
+//     CodProducto <- map["CodProducto"] //String = ""
+//     CantidadObjectivo <- map["CantidadObjectivo"] //Double = 0
+//     CantidadProducidad <- map["CantidadProducidad"] //Double = 0
+//     Conexion <- map["Conexion"] //Bool = false
+//     Marcha <- map["Marcha"] //Bool = false
+//     PesoObjetivo <- map["PesoObjetivo"] //Double = 0
+//     PesoProducido <- map["PesoProducido"] //Double = 0
+//     Rendimiento <- map["Rendimiento"] //Int = 0
+//     SeccionMaquina <- map["SeccionMaquina"] //Int = 2
+//    }
     
 }

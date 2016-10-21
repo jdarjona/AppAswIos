@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import EVReflection
+
 
 class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITabBarDelegate {
 
@@ -19,7 +19,7 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     var ref:FIRDatabaseReference!
     @IBOutlet weak var sinopticoTableView: UITableView!
-    var listaSinoptico:[SinopticoFabrica] = []
+    var listaSinoptico: [SinopticoFabrica] = []
     var listSinoptico:Dictionary = Dictionary<String,SinopticoFabrica>()
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -32,9 +32,12 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-         self.navigationController!.title = "Sinóptico"
-         self.ref = FIRDatabase.database().reference()
+        self.navigationController!.title = "Sinóptico"
+        self.ref = FIRDatabase.database().reference()
         self.url = self.urlLieja
+        
+        // Por defecto seleccionamos el primer tab
+        sinopticoTabBar.selectedItem = tabBarItemLiege
         initFireBase()
         
     }
@@ -64,7 +67,7 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         self.listaSinoptico = []
-        ref.child(url).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+        ref.child(url).observeSingleEvent(of: .value, with: { (snapshot) in
          // Get user value
             var tempDict = [NSDictionary]()
             
@@ -80,7 +83,7 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
            self.sinopticoFireBase()
         
-            self.listaSinoptico = self.listaSinoptico.sort({ (s1:SinopticoFabrica, s2:SinopticoFabrica) -> Bool in
+            self.listaSinoptico = self.listaSinoptico.sorted(by: { (s1:SinopticoFabrica, s2:SinopticoFabrica) -> Bool in
                 s1.SeccionMaquina>s2.SeccionMaquina
             }).filter({$0.CantidadObjectivo != 0 || $0.Conexion==true})
         
@@ -88,7 +91,7 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
            
             
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     
                     
                     
@@ -111,7 +114,7 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func sinopticoFireBase(){
         
-        _ = ref.child(url).observeEventType(FIRDataEventType.ChildChanged , withBlock: { (snapshot) in
+        _ = ref.child(url).observe(FIRDataEventType.childChanged , with: { (snapshot) in
             
         
             
@@ -120,11 +123,11 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 let dict = snapshot.value as! NSDictionary
                 let maquina = self.ParseFirebaseData(dict)
                 
-                if self.listaSinoptico.contains({ (s:SinopticoFabrica) -> Bool in
+                if self.listaSinoptico.contains(where: { (s:SinopticoFabrica) -> Bool in
                     s.IdMaquina==maquina.IdMaquina
                 })
                 {
-                    for (index, value) in self.listaSinoptico.enumerate() {
+                    for (index, value) in self.listaSinoptico.enumerated() {
                         print("Item \(index + 1): \(value)")
                         if value.IdMaquina == maquina.IdMaquina{
                             self.listaSinoptico[index]=maquina
@@ -172,7 +175,7 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     }
 
-    func ParseFirebaseData(jsonDictionary:NSDictionary)->SinopticoFabrica {
+    func ParseFirebaseData(_ jsonDictionary:NSDictionary)->SinopticoFabrica {
         // Parse data from Firebase
         
         // Loop through each dictionary and assign values to location object
@@ -194,8 +197,16 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
             sinotico.PesoProducido = jsonDictionary["PesoProducido"] as! Double!
             sinotico.CodOperario = jsonDictionary["CodOperario"] as! String!
             sinotico.CodProducto = jsonDictionary["CodProducto"] as! String!
-            sinotico.Operario1 = jsonDictionary["Operario1"] as! String!
-            sinotico.Operario2 = jsonDictionary["Operario2"] as! String!
+            sinotico.Operario1 = ""
+            if let operario1 = jsonDictionary["Operario1"] as? String {
+                sinotico.Operario1 = operario1
+            }
+            sinotico.Operario2 = ""
+            if let operario2 = jsonDictionary["Operario2"] as? String {
+                    sinotico.Operario2 = operario2
+            }
+            //sinotico.Operario1 = (jsonDictionary["Operario1"] as! String!)
+            //sinotico.Operario2 = jsonDictionary["Operario2"] as! String!
             sinotico.UnidadMedida = jsonDictionary["UnidadMedida"] as! String!
         
            // sinotico.CodOperario = jsonDictionary["CodOperario"] as! String!
@@ -210,79 +221,84 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     // MARK: TableView
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return listaSinoptico.count
+        return self.listaSinoptico.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let numberFormatter = NSNumberFormatter()
-        numberFormatter.numberStyle = .DecimalStyle
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
         
-        let localizacion:NSLocale = NSLocale(localeIdentifier: "es_ES")
+        let localizacion:Locale = Locale(identifier: "es_ES")
         //numberFormatter.stringFromNumber(pesoKg)
         numberFormatter.locale = localizacion
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("SinopticoCell") as! SinopticoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SinopticoCell") as! SinopticoTableViewCell
         
-        let cantidadObjetivo = numberFormatter.stringFromNumber(Int(listaSinoptico[indexPath.row].CantidadObjectivo))
-        let cantidadProducida = numberFormatter.stringFromNumber(Int(listaSinoptico[indexPath.row].CantidadProducidad))
-         numberFormatter.numberStyle = .NoStyle
-        let rendimiento = numberFormatter.stringFromNumber(listaSinoptico[indexPath.row].Rendimiento)
-        let unidadMedida = listaSinoptico[indexPath.row].UnidadMedida
+        let cantidadObjetivo = (from: Int(listaSinoptico[(indexPath as NSIndexPath).row].CantidadObjectivo))
+        let cantidadProducida = (from: Int(listaSinoptico[(indexPath as NSIndexPath).row].CantidadProducidad))
+         numberFormatter.numberStyle = .none
+        let rendimiento = (from: Int(listaSinoptico[(indexPath as NSIndexPath).row].Rendimiento))
+        let unidadMedida = listaSinoptico[(indexPath as NSIndexPath).row].UnidadMedida
         
-        cell.rendimientoLabel.text = NSString(format: "%@%@",rendimiento!,"%") as String
-        cell.rendimientoLabel.textColor = colorRendimiento(listaSinoptico[indexPath.row].Rendimiento)
+        cell.rendimientoLabel.text = NSString(format: "%@%@",String(rendimiento),"%") as String
+        cell.rendimientoLabel.textColor = colorRendimiento(listaSinoptico[(indexPath as NSIndexPath).row].Rendimiento)
         cell.productoLabel.text = ""
-        cell.objetivoLabel.text = NSString(format: " %@ %@/%@ %@ Objetivo",cantidadProducida!,unidadMedida,cantidadObjetivo!,unidadMedida) as String
-        cell.productoLabel.text = listaSinoptico[indexPath.row].CodProducto
-        cell.operarioLabel.text = listaSinoptico[indexPath.row].Operario1
-        switch listaSinoptico[indexPath.row].Conexion {
+        cell.objetivoLabel.text = NSString(format: " %@ %@/%@ %@ Objetivo",String(cantidadProducida),unidadMedida,String(cantidadObjetivo),unidadMedida) as String
+        cell.productoLabel.text = listaSinoptico[(indexPath as NSIndexPath).row].CodProducto
+        cell.operarioLabel.text = listaSinoptico[(indexPath as NSIndexPath).row].Operario1
+        switch listaSinoptico[(indexPath as NSIndexPath).row].Conexion {
         case true:
             cell.conexionImage.image = UIImage(named: "conexionOk")
         case false:
             cell.conexionImage.image = UIImage(named: "conexionNoOk")
        
         }
-        switch listaSinoptico[indexPath.row].Marcha {
+        switch listaSinoptico[(indexPath as NSIndexPath).row].Marcha {
         case true:
             cell.marchaImagen.image = UIImage(named: "marcha")
         case false:
             cell.marchaImagen.image = UIImage(named: "marchaNo")
                 }
-        cell.maquinaLabel.text =  listaSinoptico[indexPath.row].IdMaquina
-        cell.maquinaImage.image = UIImage(named: listaSinoptico[indexPath.row].IdMaquina)
-        cell.rendimientoProgress.setProgress(Float(listaSinoptico[indexPath.row].Rendimiento)/100, animated: true)
-        cell.rendimientoProgress.progressTintColor = colorRendimiento(listaSinoptico[indexPath.row].Rendimiento)
+        cell.maquinaLabel.text =  listaSinoptico[(indexPath as NSIndexPath).row].IdMaquina
+        cell.maquinaImage.image = UIImage(named: listaSinoptico[(indexPath as NSIndexPath).row].IdMaquina)
+        cell.rendimientoProgress.setProgress(Float(listaSinoptico[(indexPath as NSIndexPath).row].Rendimiento)/100, animated: true)
+        cell.rendimientoProgress.progressTintColor = colorRendimiento(listaSinoptico[(indexPath as NSIndexPath).row].Rendimiento)
         return cell
     }
     
-    func colorRendimiento(rendimiento: Int ) -> UIColor{
+    func colorRendimiento(_ rendimiento: Int ) -> UIColor{
         
         if  rendimiento >= 75 {
         
-            return UIColor.greenColor()
+            return UIColor.green
             
         }else if (rendimiento < 75 && rendimiento >= 50) {
-            return UIColor.orangeColor()
+            return UIColor.orange
             
           
         }else{
         
-            return UIColor.redColor()
+            return UIColor.red
         }
         
     }
 
     // MARK: Tab
     
-    func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        
+
         
         switch item.tag {
         case 0:
+            
+            
             url = self.urlLieja
             
         case 1:
+            
             url = self.urlSevilla
             
         default:

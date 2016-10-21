@@ -7,22 +7,32 @@
 //
 
 import UIKit
-import EVReflection
+import ObjectMapper
 
-public class PedidoVenta: EVObject {
+public class PedidoVenta:NSObject, Mappable {
 
     var Key: String = ""
     var Sell_to_Customer_Name: String = ""
     
     var SalesLines: [Sales_Order_Subform_ws] = [Sales_Order_Subform_ws]()
     
-    required public init(){
     
+    override init() {
+        super.init()
     }
-
+    
+    convenience required public init?(map: Map){
+        self.init()
+    }
+    
+    public func mapping(map: Map) {
+     Key <- map["keyField"] // String = ""
+     Sell_to_Customer_Name <- map["sell_to_Customer_NameField"] // String = ""
+     SalesLines <- map["salesLinesField"] // [Sales_Order_Subform_ws] = [Sales_Order_Subform_ws]()
+    }
 }
 
-public class Sales_Order_Subform_ws:EVObject{
+public class Sales_Order_Subform_ws:NSObject, Mappable{
 
     var Key: String = ""
     var No: String = ""
@@ -34,8 +44,24 @@ public class Sales_Order_Subform_ws:EVObject{
     var PrecioLineaTotal:Float = 0
     
     
-
+    override init() {
+        super.init()
+    }
     
+    convenience required public init?(map: Map){
+        self.init()
+    }
+    
+    public func mapping(map: Map) {
+     Key <- map["keyField"] // String = ""
+     No <- map["noField"] // String = ""
+     Alias <- map["aliasField"] // String = ""
+     Description <- map["descriptionField"] // String = ""
+     Cantidad_KG <- map["cantidad_KGField"] // Double = 0
+     Cantidad_PAQ <- map["cantidad_PAQField"] // Double = 0
+     Line_Amount <- map["line_AmountField"] // Double = 0
+     PrecioLineaTotal <- map["precioLineaTotalField"] //Float = 0
+    }
  }
 
 

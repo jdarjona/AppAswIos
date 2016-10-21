@@ -7,150 +7,281 @@
 //
 
 import Foundation
-import EVReflection
+import AlamofireObjectMapper
+import ObjectMapper
+import Alamofire
 
-public class ManagerJson {
+open class ManagerJson {
 
-    static public var basicURL: String = "http://192.168.1.2/WSTRH/%@"
-    static public var bodyStr: String = ""
-
-    static public func getList<T where T:EVObject>(result: T, Url: String, DatosCallBack:(datosCallBack:[T])->Void){
+    //static public var basicURL: String = "http://192.168.1.2/WSTRH/%@"
+    //Alamofire.request("https://httpbin.org/get")
+    static open var basicURL: String = "" //"http://intranet.trh-be.com/WSTRH/%@"
+    static open var bodyStr: String = ""
+    static open var basicURLTok: String = ""
+    
+    
+    
+    enum WifiEmpresa: String{
+        case wifiSevilla = "TRH_Admin"
+        case wifiLiege = "TRH Liege"
+        case wifiLiege2 = "TRH_admin"
+    }
+    
+    enum Empresa: String{
+        case Sevilla = "Sevilla"
+        case Liege = "Liege"
+    }
+    
+    
+    
+    static var empresaSeleccionada: Empresa = .Sevilla{
         
         
-        let urlAPI = String(format: basicURL, Url)
-        
-        let url = NSURL(string: urlAPI)!
-        
-        
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "GET"
-        request.setValue("Bearer \(ManagerLogin.token)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let session = NSURLSession.sharedSession()
-        
-        // Make the POST call and handle it in a completion handler
-        session.dataTaskWithRequest(request, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            // Make sure we get an OK response
+        didSet{
+            let  ssid = AppDelegate.fetchSSIDInfo()
+            let  wifiEmpresa  = WifiEmpresa.wifiSevilla.rawValue
             
-            guard let realResponse = response as? NSHTTPURLResponse where
-                realResponse.statusCode == 200 else {
-                    print("Not a 200 response")
-                    return
+            
+            if empresaSeleccionada == .Sevilla{
+               
+                if(ssid == wifiEmpresa || ssid == ""){
+                    
+                    basicURL = "http://192.168.1.2/WSTRH/%@"
+                    basicURLTok = "http://192.168.1.2/WSTRH/Token"
+                }else {
+                    
+                    basicURL = "http://intranet.trh-es.com/WSTRH/%@"
+                    basicURLTok = "http://intranet.trh-es.com/WSTRH/Token"
+                }
+
             }
             
-            // Read the JSON
-            do {
-                if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+            if empresaSeleccionada == .Liege{
+                if(ssid==String(describing: WifiEmpresa.wifiLiege.rawValue) || ssid==String(describing: WifiEmpresa.wifiLiege2.rawValue) ){
                     
+                    basicURL = "http://192.168.1.2/WSTRH/%@"
+                    basicURLTok = "http://192.168.1.2/WSTRH/Token"
                     
-                    let dataJSON = ipString as String
-                    let resultJson = [T](json: dataJSON)
-                    DatosCallBack(datosCallBack:resultJson)
+                }else {
                     
-                    
+                    basicURL = "http://intranet.trh-be.com/WSTRH/%@"
+                    basicURLTok = "http://intranet.trh-be.com/WSTRH/Token"
                 }
+            }
+        }
+    }
+    
+//    
+//    
+//    static func establecerRuta(conect: String,ssid: String){
+//        
+//        let tabEmpresa="Sevilla"
+//        
+//        if (ssid == "TRH_Admin" || ssid == "TRH Admin"){
+//            basicURL = "http://192.168.1.2/WSTRH/%@"
+//        }else if(tabEmpresa=="Sevilla"){
+//            basicURL = "http://intranet.trh-es.com/WSTRH/%@"
+//        }else{
+//            basicURL = "http://intranet.trh-be.com/WSTRH/%@"
+//        }
+//        
+//    }
+    
+    
+
+    static open func getList<T>(_ result: T, Url: String, DatosCallBack:@escaping (_ datosCallBack:[T])->Void) where T:Mappable{
+                
+        let urlAPI = String(format: basicURL, Url)
+        
+        let url = URL(string: urlAPI)!
+        
+        /*Alamofire.request("https://httpbin.org/get").validate().responseJSON { response in
+            switch response.result {
+            case .success:
+                print("Validation Successful")
+            case .failure(let error):
+                print(error)
+            }
+        }       */
+        let token:String = NSString(format: "Bearer %@" , ManagerLogin.token) as String //"Bearer \(ManagerLogin.token)"
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(token, forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let session = URLSession.shared.dataTask(with: request, completionHandler: { ( data, response, error) -> Void in
+            // Make sure we get an OK response
+            if error != nil {
+                
+                print(error!.localizedDescription)
+                
+            } else {
+                
+                do {
+            
+//            guard let realResponse = response as? HTTPURLResponse ,
+//                realResponse.statusCode == 200 else {
+//                    
+//                    print("Not a 200 response")
+//                    if let repuesta = response as? HTTPURLResponse {
+//                        print(repuesta.statusCode)
+//                        if let errores = NSString(data:data!, encoding: String.Encoding.utf8.rawValue) {
+//                        
+//                         print(errores)
+//                        }
+//                       
+//                        
+//                    }
+//                    
+//                    return
+//            }
+            
+            // Read the JSON
+           // do {
+                    if let datos=data {
+                        
+                        if let ipString = NSString(data:(datos), encoding: String.Encoding.utf8.rawValue) {
+                            
+                            
+                          
+                            let dataJSON:String? = ipString as String
+                            if dataJSON != "null"{
+                                let resultJson = [T](JSONString: dataJSON!)
+                                //let resultJson = [T](dataJSON)
+                                DatosCallBack(resultJson!)
+                            }else{
+                                print("Devolcion de null a la llamada   \(urlAPI)")
+                            }
+                            
+                        
+                            
+                            
+                        }
+                    
+                    }else {
+                    
+                        print("Devolcion de null a la llamada   \(urlAPI)")
+                    }
+                
             } catch {
                 print("bad things happened")
             }
-        }).resume();
+            }
+        })
+        session.resume();
         
         
     }
     
-    static func getJson(Url:String,DatosCallBack:(json:String)->()) -> () {
+    static func getJson(_ Url:String,DatosCallBack:@escaping (_ json:String)->()) -> () {
         
         let urlAPI = String(format: basicURL, Url)
-        let url = NSURL(string: urlAPI)!
+        let url = URL(string: urlAPI)!
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "GET"
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
         request.setValue("Bearer \(ManagerLogin.token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let session = NSURLSession.sharedSession()
-        session.dataTaskWithRequest(request, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+        let session = URLSession.shared.dataTask(with: request, completionHandler: { ( data, response, error) -> Void in
             // Make sure we get an OK response
-            
-            guard let realResponse = response as? NSHTTPURLResponse where
-                realResponse.statusCode == 200 else {
-                    print("Not a 200 response")
-                    return
-            }
-            
-            // Read the JSON
-            do {
-                if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+            if error != nil {
+                
+                print(error!.localizedDescription)
+                
+            } else {
+                
+                do {
+//            guard let realResponse = response as? HTTPURLResponse ,
+//                realResponse.statusCode == 200 else {
+//                    print("Not a 200 response")
+//                    return
+//            }
+//            
+//            // Read the JSON
+//            do {
+                if let ipString = NSString(data:data!, encoding: String.Encoding.utf8.rawValue) {
                     
                     
                     let dataJSON = ipString as String
-                    DatosCallBack(json:dataJSON)
+                    let resultJson = (JSONString: dataJSON)
+                    DatosCallBack(resultJson)
                     
                     
                 }
             } catch {
                 print("bad things happened")
             }
-        }).resume();
+            }
+        })
+        session.resume();
         
     }
     
-    static func postJson(Url:String,DatosCallBack:(json:String)->()) -> () {
+    static func postJson(_ Url:String,DatosCallBack:@escaping (_ json:String)->()) -> () {
         
         let urlAPI = String(format: basicURL, Url)
-        let url = NSURL(string: urlAPI)!
+        let url = URL(string: urlAPI)!
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
         request.setValue("Bearer \(ManagerLogin.token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let session = NSURLSession.sharedSession()
-        session.dataTaskWithRequest(request, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            // Make sure we get an OK response
+        let session = URLSession.shared.dataTask(with: request, completionHandler: { ( data: Data?, response: URLResponse?, error: NSError?) -> Void in
             
-            guard let realResponse = response as? NSHTTPURLResponse where
+            
+            guard let realResponse = response as? HTTPURLResponse ,
                 realResponse.statusCode == 200 else {
                     print("Not a 200 response")
+                    if let repuesta = response as? HTTPURLResponse {
+                            print(repuesta.statusCode)
+                            print(data)
+                    
+                    }
+                    
+                    
                     return
             }
             
             // Read the JSON
             do {
-                if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+                if let ipString = NSString(data:data!, encoding: String.Encoding.utf8.rawValue) {
                     
                     
                     let dataJSON = ipString as String
-                    DatosCallBack(json:dataJSON)
+                    DatosCallBack(dataJSON)
                     
                     
                 }
             } catch {
                 print("bad things happened")
             }
-        }).resume();
         
+        } as! (Data?, URLResponse?, Error?) -> Void)
+            session.resume()
+    
     }
-    static public func updateJson<T where T:EVObject>(dato: T, Url: String, DatosCallBack:(json:String) -> Void) -> () {
+    static open func updateJson<T>(_ dato: T, Url: String, DatosCallBack:@escaping (_ json:String) -> Void) -> () where T:Mappable {
     
        // let urlAPI = String(format: basicURL, Url)
         //let session = NSURLSession.sharedSession()
         //let url = NSURL(string: urlAPI)!
         
-        self.bodyStr =  dato.toJsonString()
+        self.bodyStr =  dato.toJSONString()!
         
         // Setup the request
         //let myURL = NSURL(string: Url)!
         let urlAPI = String(format: basicURL, Url)
-        let myURL = NSURL(string: urlAPI)!
+        let myURL = URL(string: urlAPI)!
 
-        let request = NSMutableURLRequest(URL: myURL)
-        request.HTTPMethod = "PUT"
+        var request = URLRequest(url: myURL)
+        request.httpMethod = "PUT"
         request.setValue("Bearer \(ManagerLogin.token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         //request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.HTTPBody = bodyStr.dataUsingEncoding(NSUTF8StringEncoding)!
+        request.httpBody = bodyStr.data(using: String.Encoding.utf8)!
         
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+        let task = URLSession.shared.dataTask(with: request, completionHandler: {
             (data, response, error) -> Void in
             if let unwrappedData = data {
                 print(unwrappedData)
@@ -159,11 +290,11 @@ public class ManagerJson {
                 print("------")
         
                 do {
-                    if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
+                    if let ipString = NSString(data:data!, encoding: String.Encoding.utf8.rawValue) {
                         
                         
                         let dataJSON = ipString as String
-                        DatosCallBack(json:dataJSON)
+                        DatosCallBack(dataJSON)
                         
                         
                     }
@@ -174,7 +305,7 @@ public class ManagerJson {
                 }
             }
         
-        }
+        }) 
         
             task.resume()
             
