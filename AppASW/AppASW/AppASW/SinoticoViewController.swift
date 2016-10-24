@@ -8,31 +8,44 @@
 
 import UIKit
 import Firebase
+import DropDown
 
 
 class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITabBarDelegate {
 
     let urlLieja = "Maquinas/TRH Liege"
     let urlSevilla = "Maquinas/TRH"
-    
     var url = ""
-    
+
     var ref:FIRDatabaseReference!
-    @IBOutlet weak var sinopticoTableView: UITableView!
+    var rightMenu = DropDown()
+    
     var listaSinoptico: [SinopticoFabrica] = []
+    var listaSinopticoCompleta: [SinopticoFabrica] = []
     var listSinoptico:Dictionary = Dictionary<String,SinopticoFabrica>()
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+    @IBOutlet weak var sinopticoTableView: UITableView!
     @IBOutlet weak var sinopticoTabBar: UITabBar!
     
     @IBOutlet weak var tabBarItemSevilla: UITabBarItem!
     @IBOutlet weak var tabBarItemLiege: UITabBarItem!
+    
+    enum ModoSinoptico:String {
+    
+        case DiaCompleto = "Dia Completo"
+        case MomentoActual = "Momento Actual"
+        static let ToArray = ["Dia Completo","Momento Actual"]
+    }
+    
+    var modoSinoptico:ModoSinoptico = .MomentoActual
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.navigationController!.title = "Sinóptico"
+        navigationController?.navigationBar.isTranslucent = false
         self.ref = FIRDatabase.database().reference()
         self.url = self.urlLieja
         
@@ -40,12 +53,60 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
         sinopticoTabBar.selectedItem = tabBarItemLiege
         initFireBase()
         
+        //Configuramos menus de la barra 
+        self.rightMenu.anchorView = view
+        self.rightMenu.dataSource = ModoSinoptico.ToArray
+       let valores = ModoSinoptico.RawValue()
+        print(valores)
+        self.rightMenu.selectionAction = { [weak self] (index: Int, item: String)  in
+            self?.activityIndicator.startAnimating()
+            switch index {
+            case 0:
+                self?.modoSinoptico = .DiaCompleto
+                
+                self?.listaSinoptico = (self?.listaSinopticoCompleta.sorted(by: { (s1:SinopticoFabrica, s2:SinopticoFabrica) -> Bool in
+                    s1.SeccionMaquina>s2.SeccionMaquina
+                }))!
+                
+            default:
+                self?.modoSinoptico = .MomentoActual
+                self?.listaSinoptico = (self?.listaSinopticoCompleta.sorted(by: { (s1:SinopticoFabrica, s2:SinopticoFabrica) -> Bool in
+                    s1.SeccionMaquina>s2.SeccionMaquina
+                }).filter({$0.CantidadObjectivo != 0 || $0.Conexion==true}))!
+              
+            }
+            
+            DispatchQueue.main.async(execute: {
+                
+                
+                
+                self?.sinopticoTableView.reloadData()
+                
+                self?.activityIndicator.stopAnimating()
+            })
+
+        
+        }
+        let rightButton = UIBarButtonItem(title: "Modo", style: .plain, target: self, action: #selector(ViewController.showRightDropdown))
+        //UIBarButtonItem(image: UIImage(named: "Orden"), style: .Plain, target: self, action: #selector(ViewController.showRightDropdown))
+        
+        self.navigationItem.rightBarButtonItem = rightButton
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func showRightDropdown() {
+        if self.rightMenu.isDescendant(of: self.view) == true {
+            self.rightMenu.hide() //hideMenu()
+        } else {
+            self.rightMenu.show() // showMenuFromView(self.view)
+        }
+    }
+
     
 
     /*
@@ -66,7 +127,7 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func initFireBase()->(){
         
         
-        self.listaSinoptico = []
+        self.listaSinopticoCompleta = []
         ref.child(url).observeSingleEvent(of: .value, with: { (snapshot) in
          // Get user value
             var tempDict = [NSDictionary]()
@@ -76,14 +137,14 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 let child = item as! FIRDataSnapshot
                 let dict = child.value as! NSDictionary
                 //print(dict)
-                self.listaSinoptico.append(self.ParseFirebaseData(dict))
+                self.listaSinopticoCompleta.append(self.ParseFirebaseData(dict))
                 tempDict.append(dict)
                 
             }
             
            self.sinopticoFireBase()
         
-            self.listaSinoptico = self.listaSinoptico.sorted(by: { (s1:SinopticoFabrica, s2:SinopticoFabrica) -> Bool in
+            self.listaSinoptico = self.listaSinopticoCompleta.sorted(by: { (s1:SinopticoFabrica, s2:SinopticoFabrica) -> Bool in
                 s1.SeccionMaquina>s2.SeccionMaquina
             }).filter({$0.CantidadObjectivo != 0 || $0.Conexion==true})
         
@@ -123,56 +184,25 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 let dict = snapshot.value as! NSDictionary
                 let maquina = self.ParseFirebaseData(dict)
                 
-                if self.listaSinoptico.contains(where: { (s:SinopticoFabrica) -> Bool in
+                if self.listaSinopticoCompleta.contains(where: { (s:SinopticoFabrica) -> Bool in
                     s.IdMaquina==maquina.IdMaquina
                 })
                 {
-                    for (index, value) in self.listaSinoptico.enumerated() {
+                    for (index, value) in self.listaSinopticoCompleta.enumerated() {
                         print("Item \(index + 1): \(value)")
                         if value.IdMaquina == maquina.IdMaquina{
-                            self.listaSinoptico[index]=maquina
+                            self.listaSinopticoCompleta[index]=maquina
                             break
                         }
                     }
                 }else {
-                 self.listaSinoptico.append(maquina)
+                 self.listaSinopticoCompleta.append(maquina)
                 }
                 
            // }
         })
         
-      /*  let refHandleAdd = ref.child(url).observeEventType(FIRDataEventType.ChildAdded , withBlock: { (snapshot) in
-            
-            
-            
-            for item in snapshot.children {
-                
-                let child = item as! FIRDataSnapshot
-                print(child)
-                let dict = child.value as! NSDictionary
-                let maquina = self.ParseFirebaseData(dict)
-                
-                if self.listaSinoptico.contains({ (s:SinopticoFabrica) -> Bool in
-                    s.IdMaquina==maquina.IdMaquina
-                })
-                {
-                    for (index, value) in self.listaSinoptico.enumerate() {
-                        print("Item \(index + 1): \(value)")
-                        if value.IdMaquina == maquina.IdMaquina{
-                            self.listaSinoptico[index]=maquina
-                        }
-                    }
-                }else {
-                    self.listaSinoptico.append(maquina)
-                }
-                
-            }
-        })
-
-        */
-    
-       // print(refHandle)
-    
+        
     }
 
     func ParseFirebaseData(_ jsonDictionary:NSDictionary)->SinopticoFabrica {
@@ -205,11 +235,15 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if let operario2 = jsonDictionary["Operario2"] as? String {
                     sinotico.Operario2 = operario2
             }
-            //sinotico.Operario1 = (jsonDictionary["Operario1"] as! String!)
-            //sinotico.Operario2 = jsonDictionary["Operario2"] as! String!
             sinotico.UnidadMedida = jsonDictionary["UnidadMedida"] as! String!
         
-           // sinotico.CodOperario = jsonDictionary["CodOperario"] as! String!
+            //Valores Acumulados
+            sinotico.CantidadObjectivoDia = jsonDictionary["CantidadObjectivo"] as! Double!
+            sinotico.CantidadProducidadDia = jsonDictionary["CantidadProducidadDia"] as! Double!
+            sinotico.PesoObjetivoDia = jsonDictionary["PesoObjetivoDia"] as! Double!
+            sinotico.PesoProducidoDia = jsonDictionary["PesoProducidoDia"] as! Double!
+            sinotico.RendimientoDia = jsonDictionary["RendimientoDia"] as! Int!
+        
             
             
             return sinotico
@@ -236,35 +270,60 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "SinopticoCell") as! SinopticoTableViewCell
         
-        let cantidadObjetivo = (from: Int(listaSinoptico[(indexPath as NSIndexPath).row].CantidadObjectivo))
-        let cantidadProducida = (from: Int(listaSinoptico[(indexPath as NSIndexPath).row].CantidadProducidad))
-         numberFormatter.numberStyle = .none
-        let rendimiento = (from: Int(listaSinoptico[(indexPath as NSIndexPath).row].Rendimiento))
+        
+        var cantidadObjetivo:Int
+        var cantidadProducida:Int
+        var rendimiento:Int
+        var operario:String = ""
+        var producto = ""
         let unidadMedida = listaSinoptico[(indexPath as NSIndexPath).row].UnidadMedida
         
+        switch modoSinoptico {
+        
+        case .DiaCompleto:
+            cantidadObjetivo = Int(listaSinoptico[(indexPath as NSIndexPath).row].CantidadObjectivoDia)
+            cantidadProducida = Int(listaSinoptico[(indexPath as NSIndexPath).row].CantidadProducidadDia)
+            rendimiento = Int(listaSinoptico[(indexPath as NSIndexPath).row].RendimientoDia)
+            producto = listaSinoptico[(indexPath as NSIndexPath).row].CodProductoDia
+          
+        case .MomentoActual:
+            
+           operario = listaSinoptico[(indexPath as NSIndexPath).row].Operario1
+           producto = listaSinoptico[(indexPath as NSIndexPath).row].CodProducto
+           cantidadObjetivo = Int(listaSinoptico[(indexPath as NSIndexPath).row].CantidadObjectivo)
+           cantidadProducida = Int(listaSinoptico[(indexPath as NSIndexPath).row].CantidadProducidad)
+           rendimiento = Int(listaSinoptico[(indexPath as NSIndexPath).row].Rendimiento)
+        
+        }
+        
+        
+        //Rellenamos la celda
+        cell.maquinaLabel.text =  listaSinoptico[(indexPath as NSIndexPath).row].IdMaquina
+        cell.maquinaImage.image = UIImage(named: listaSinoptico[(indexPath as NSIndexPath).row].IdMaquina)
         cell.rendimientoLabel.text = NSString(format: "%@%@",String(rendimiento),"%") as String
-        cell.rendimientoLabel.textColor = colorRendimiento(listaSinoptico[(indexPath as NSIndexPath).row].Rendimiento)
-        cell.productoLabel.text = ""
-        cell.objetivoLabel.text = NSString(format: " %@ %@/%@ %@ Objetivo",String(cantidadProducida),unidadMedida,String(cantidadObjetivo),unidadMedida) as String
-        cell.productoLabel.text = listaSinoptico[(indexPath as NSIndexPath).row].CodProducto
-        cell.operarioLabel.text = listaSinoptico[(indexPath as NSIndexPath).row].Operario1
+        cell.rendimientoLabel.textColor = colorRendimiento(rendimiento)
+        cell.objetivoLabel.text = NSString(format: " %@ %@/%@ %@ Objetivo",numberFormatter.string(from: NSNumber(integerLiteral: cantidadProducida))!,unidadMedida,numberFormatter.string(from: NSNumber(integerLiteral: cantidadObjetivo))!,unidadMedida) as String
+        cell.productoLabel.text = producto
+        cell.operarioLabel.text = operario
         switch listaSinoptico[(indexPath as NSIndexPath).row].Conexion {
         case true:
             cell.conexionImage.image = UIImage(named: "conexionOk")
         case false:
             cell.conexionImage.image = UIImage(named: "conexionNoOk")
-       
+            
         }
         switch listaSinoptico[(indexPath as NSIndexPath).row].Marcha {
         case true:
             cell.marchaImagen.image = UIImage(named: "marcha")
         case false:
             cell.marchaImagen.image = UIImage(named: "marchaNo")
-                }
-        cell.maquinaLabel.text =  listaSinoptico[(indexPath as NSIndexPath).row].IdMaquina
-        cell.maquinaImage.image = UIImage(named: listaSinoptico[(indexPath as NSIndexPath).row].IdMaquina)
-        cell.rendimientoProgress.setProgress(Float(listaSinoptico[(indexPath as NSIndexPath).row].Rendimiento)/100, animated: true)
-        cell.rendimientoProgress.progressTintColor = colorRendimiento(listaSinoptico[(indexPath as NSIndexPath).row].Rendimiento)
+        }
+
+        cell.rendimientoProgress.setProgress(Float(rendimiento)/100, animated: true)
+        cell.rendimientoProgress.progressTintColor = colorRendimiento(rendimiento)
+        
+        
+        
         return cell
     }
     

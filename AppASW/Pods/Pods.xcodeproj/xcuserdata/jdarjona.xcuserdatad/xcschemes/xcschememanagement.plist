@@ -4,17 +4,27 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>AZDropdownMenu-AZDropdownMenu.xcscheme</key>
+		<key>AKSideMenu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>AZDropdownMenu.xcscheme</key>
+		<key>Alamofire.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>EVReflection.xcscheme</key>
+		<key>AlamofireObjectMapper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>DropDown.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>ObjectMapper.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -34,7 +44,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SideMenuController.xcscheme</key>
+		<key>Reachability.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -42,17 +52,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>336B93337DFC5EE58B564606FF93F15D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5D71132139A1E1855313CBD9F229AC7A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>71BCF3B9DEA254EA0F9B1862073BCB80</key>
+		<key>66E650B4D4AC9D2D25D5934F30EE7546</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,17 +62,37 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C3C2090211A29BD5E3D9489627F6F807</key>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D7DB6F4CBF65153FAD432A8C011B1FFB</key>
+		<key>9F766ADB76A46AB732825D44C4BAAABF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BF4F5F9101D7A68E18D6AAB5ADF30D20</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C5CBCAA97E951CC882334464FBDF983D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C7273A8945AF5B18D89B9A0AA820AD74</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>DD8CD7A8B3D129905EA665DB3C6113D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FBD082A0D35F7917EAB9DD9D3CCA9976</key>
 		<dict>
 			<key>primary</key>
 			<true/>

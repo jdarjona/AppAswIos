@@ -44,7 +44,7 @@ open class ManagerJson {
             
             if empresaSeleccionada == .Sevilla{
                
-                if(ssid == wifiEmpresa || ssid == ""){
+                if(ssid == wifiEmpresa ){
                     
                     basicURL = "http://192.168.1.2/WSTRH/%@"
                     basicURLTok = "http://192.168.1.2/WSTRH/Token"
@@ -56,8 +56,8 @@ open class ManagerJson {
 
             }
             
-            if empresaSeleccionada == .Liege{
-                if(ssid==String(describing: WifiEmpresa.wifiLiege.rawValue) || ssid==String(describing: WifiEmpresa.wifiLiege2.rawValue) ){
+            if (empresaSeleccionada == .Liege || ssid == ""){
+                if ((ssid==String(describing: WifiEmpresa.wifiLiege.rawValue) || ssid==String(describing: WifiEmpresa.wifiLiege2.rawValue) || ssid == "") ){
                     
                     basicURL = "http://192.168.1.2/WSTRH/%@"
                     basicURLTok = "http://192.168.1.2/WSTRH/Token"

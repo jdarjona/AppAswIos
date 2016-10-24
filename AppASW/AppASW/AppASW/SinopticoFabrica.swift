@@ -18,13 +18,19 @@ public class SinopticoFabrica {
     var Operario2:String = ""
     var UnidadMedida = ""
     var CodProducto:String = ""
+    var CodProductoDia:String = ""
     var CantidadObjectivo:Double = 0
+    var CantidadObjectivoDia:Double = 0
     var CantidadProducidad:Double = 0
+    var CantidadProducidadDia:Double = 0
     var Conexion:Bool = false
     var Marcha:Bool = false
     var PesoObjetivo:Double = 0
+    var PesoObjetivoDia:Double = 0
     var PesoProducido:Double = 0
+    var PesoProducidoDia:Double = 0
     var Rendimiento:Int = 0
+    var RendimientoDia:Int = 0
     var SeccionMaquina:Int = 2
     
 //    required public init?(map: Map){

@@ -16,7 +16,6 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     var listaMonitorizacion2: [MonitorCarga] = []
     var ref:FIRDatabaseReference!
     let notification = UILocalNotification()
-    //var rightMenu: AZDropdownMenu?
     var rightMenu = DropDown()
     var ordernDescente = true
     var ordenSeleccionado = -1
@@ -64,11 +63,9 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         //initFireBase()
         
         let menuTextos = ["Ordenar por fecha","Ordenar por estado", "Ordenar por cliente", "Ordenar por comercial"]
-        //self.rightMenu = AZDropdownMenu(titles: menuTextos)
+        
         self.rightMenu.anchorView = view
         self.rightMenu.dataSource = menuTextos
-        //self.rightMenu!.cellTapHandler =
-        
         self.rightMenu.selectionAction = { [weak self] (index: Int, item: String)  in
             if self!.ordenSeleccionado == index{
                 self!.ordernDescente = !self!.ordernDescente
