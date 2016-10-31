@@ -243,6 +243,7 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
             sinotico.PesoObjetivoDia = jsonDictionary["PesoObjetivoDia"] as! Double!
             sinotico.PesoProducidoDia = jsonDictionary["PesoProducidoDia"] as! Double!
             sinotico.RendimientoDia = jsonDictionary["RendimientoDia"] as! Int!
+            sinotico.CodProductoDia = jsonDictionary["CodProductoDia"] as! String!
         
             
             
