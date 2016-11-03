@@ -18,6 +18,8 @@
 		2E4F60B81D7973100021ADF4 /* SinopticoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4F60B71D7973100021ADF4 /* SinopticoTableViewCell.swift */; };
 		2E4F60BA1D797E540021ADF4 /* SinopticoFabrica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4F60B91D797E540021ADF4 /* SinopticoFabrica.swift */; };
 		2E55F33B1DC74DE60087898B /* VentasFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E55F33A1DC74DE60087898B /* VentasFirebase.swift */; };
+		2E74100C1DCA29CA000C9ED6 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E74100B1DCA29C9000C9ED6 /* UserNotifications.framework */; };
+		2E74100E1DCA29E6000C9ED6 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E74100D1DCA29E6000C9ED6 /* UserNotificationsUI.framework */; };
 		2E8D5DAB1D2AA93200E402F8 /* MonitorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8D5DAA1D2AA93200E402F8 /* MonitorTableViewCell.swift */; };
 		2E964A781D295CAA00F2236D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E964A771D295CAA00F2236D /* AppDelegate.swift */; };
 		2E964A7A1D295CAA00F2236D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E964A791D295CAA00F2236D /* ViewController.swift */; };
@@ -88,6 +90,8 @@
 		2E4F60B71D7973100021ADF4 /* SinopticoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinopticoTableViewCell.swift; sourceTree = "<group>"; };
 		2E4F60B91D797E540021ADF4 /* SinopticoFabrica.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinopticoFabrica.swift; sourceTree = "<group>"; };
 		2E55F33A1DC74DE60087898B /* VentasFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VentasFirebase.swift; sourceTree = "<group>"; };
+		2E74100B1DCA29C9000C9ED6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		2E74100D1DCA29E6000C9ED6 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		2E8D5DAA1D2AA93200E402F8 /* MonitorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitorTableViewCell.swift; sourceTree = "<group>"; };
 		2E964A741D295CAA00F2236D /* AppASW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppASW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E964A771D295CAA00F2236D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +149,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E74100E1DCA29E6000C9ED6 /* UserNotificationsUI.framework in Frameworks */,
+				2E74100C1DCA29CA000C9ED6 /* UserNotifications.framework in Frameworks */,
 				A6561D63BFBB861385DD7BC7 /* Pods_AppASW.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,6 +315,8 @@
 		A6CB67D0DD04DA8F23857BBC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E74100D1DCA29E6000C9ED6 /* UserNotificationsUI.framework */,
+				2E74100B1DCA29C9000C9ED6 /* UserNotifications.framework */,
 				ED8C7BFB77A63F1150D97FC9 /* Pods_AppASW.framework */,
 				24C06766D804CD14824ACB1F /* Pods_AppASWTests.framework */,
 				EA90FDF8C68F3D611672CFE9 /* Pods_AppASWUITests.framework */,
@@ -392,7 +400,7 @@
 				TargetAttributes = {
 					2E964A731D295CAA00F2236D = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = TDU442H6UH;
+						DevelopmentTeam = Z7TET2P4PN;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.WAC = {
@@ -778,15 +786,16 @@
 			baseConfigurationReference = F46E565C1DB4EF7AAA98EF39 /* Pods-AppASW.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = TDU442H6UH;
+				DEVELOPMENT_TEAM = Z7TET2P4PN;
 				INFOPLIST_FILE = AppASW/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = TRH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -795,15 +804,16 @@
 			baseConfigurationReference = D1F510BE6AE40E2675EC2D3B /* Pods-AppASW.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = TDU442H6UH;
+				DEVELOPMENT_TEAM = Z7TET2P4PN;
 				INFOPLIST_FILE = AppASW/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = TRH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

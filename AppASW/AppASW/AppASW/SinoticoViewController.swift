@@ -238,7 +238,7 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
             sinotico.UnidadMedida = jsonDictionary["UnidadMedida"] as! String!
         
             //Valores Acumulados
-            sinotico.CantidadObjectivoDia = jsonDictionary["CantidadObjectivo"] as! Double!
+            sinotico.CantidadObjectivoDia = jsonDictionary["CantidadObjectivoDia"] as! Double!
             sinotico.CantidadProducidadDia = jsonDictionary["CantidadProducidadDia"] as! Double!
             sinotico.PesoObjetivoDia = jsonDictionary["PesoObjetivoDia"] as! Double!
             sinotico.PesoProducidoDia = jsonDictionary["PesoProducidoDia"] as! Double!

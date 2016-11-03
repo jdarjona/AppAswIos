@@ -15,7 +15,6 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     var listaMonitorizacion: NSMutableArray = NSMutableArray()
     var listaMonitorizacion2: [MonitorCarga] = []
     var ref:FIRDatabaseReference!
-    let notification = UILocalNotification()
     var rightMenu = DropDown()
     var ordernDescente = true
     var ordenSeleccionado = -1
@@ -37,6 +36,15 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         super.viewDidLoad()
         
         navigationController?.navigationBar.isTranslucent = false
+                
+        //Configurar activityIndicator
+        tablaViewMonitorizacion.backgroundView = activityIndicator
+        tablaViewMonitorizacion.separatorStyle = UITableViewCellSeparatorStyle.none
+        //self.activityIndicatorView = activityIndicatorView
+        tablaViewMonitorizacion.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        //tablaViewMonitorizacion.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        
         
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipes))
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipes))
@@ -58,8 +66,7 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         getListadoMonitorizacion()
         
         //self.ref = FIRDatabase.database().reference()
-        let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        UIApplication.shared.registerUserNotificationSettings(notificationSettings)
+        
         //initFireBase()
         
         let menuTextos = ["Ordenar por fecha","Ordenar por estado", "Ordenar por cliente", "Ordenar por comercial"]
@@ -110,12 +117,13 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
 
             }
             
-            
+            self!.activityIndicator.startAnimating()
             DispatchQueue.main.async(execute: {
                 
                 
                 
                 self!.tablaViewMonitorizacion.reloadData()
+                self!.activityIndicator.stopAnimating()
             })
             print(index)
         }
@@ -174,79 +182,7 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     
     // MARK: FireBase
     
-    func initFireBase()->(){
-    
-        
-        
-        /*ref.child("Pedidos/TRH Liege").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            // Get user value
-            let username = snapshot.value!
-            
-            print(username)
-            
-            // ...
-        }) { (error) in
-            print(error.localizedDescription)
-        }*/
-        
-        let refHandle = ref.child("Pedidos/TRH Liege").observe(FIRDataEventType.childChanged, with: { (snapshot) in
-            let postDict = snapshot.value as! [String : AnyObject]
-            print(postDict)
-            
-            
-            var codigoPedido = ""
-            var estado = ""
-            
-            for (key, value) in postDict {
-            
-                switch key {
-                
-                    case "codPedido" :
-                     codigoPedido = value as! String
-                    break
-                    case "descripcion" :
-                        estado = value as! String
-                    break
-                    
-                    default: break
-                }
-                
-                
-                
-                
-            }
-            let settings = UIApplication.shared.currentUserNotificationSettings
-            if settings!.types == UIUserNotificationType() {
-                let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .alert)
-                
-               // ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(ac, animated: true, completion: nil)
-                return
-            }
-            
-         
-            
-            self.notification.fireDate = Date(timeIntervalSinceNow: 2)
-            self.notification.alertBody = NSString(format: "%@" , estado) as String
-            self.notification.alertAction = NSString(format: "%@ %@", codigoPedido, estado) as String
-            self.notification.alertTitle = NSString(format: "%@", codigoPedido) as String
-
-           
-            
-            self.notification.soundName = UILocalNotificationDefaultSoundName
-            self.notification.userInfo = ["codPedido": codigoPedido, "estado" : estado]
-            
-            UIApplication.shared.scheduleLocalNotification(self.notification)
-           
-            // ...
-        })
-        print(refHandle)
-
-        
-        
-        
-    }
-
+  
     // MARK: TableView
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -276,7 +212,7 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
             }
         }
        
-        self.navigationItem.titleView = setTitle("Monitorización", subtitle: NSString(format: "%d Tm enviadas de %d previstas", tmPedidosRuta , tmPedidoPendienteRuta ) as String)
+        self.navigationItem.titleView = setTitle("Monitorización", subtitle: NSString(format: "%d Tm enviadas de %d previstas hoy", tmPedidosRuta , tmPedidoPendienteRuta ) as String)
         
         let numeroFila = self.listaMonitorizacion2.count
         

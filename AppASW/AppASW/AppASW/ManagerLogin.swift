@@ -16,7 +16,7 @@ open class ManagerLogin{
     static open var salesPerson: String = "V005"
     
     
-    static open func getlogin(_ user:String, password:String,result:@escaping (_ result:Bool)->(Void)) {
+    static open func getlogin( user:String, password:String,result:@escaping (_ result:Bool)->(Void)) {
         
         //var flag: Bool = false
         

@@ -8,11 +8,15 @@
 
 import Foundation
 import UIKit
+import UserNotifications
+
 
 class LoginViewControler:UIViewController, UIPickerViewDataSource, UIPickerViewDelegate{
   
     let datos:AccesoDatos = AccesoDatos()
     var logon:Bool = false
+    
+    @IBOutlet weak var activityInicator: UIActivityIndicatorView!
     
     
     @IBOutlet weak var usuarioTextField: UITextField!
@@ -25,9 +29,42 @@ class LoginViewControler:UIViewController, UIPickerViewDataSource, UIPickerViewD
     var pickerData = ["Sevilla", "Liege"]
     static var empresaSeleccionada: String = ""
 
-    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //Permiso Notificaciones
+        LoginViewControler.empresaSeleccionada = pickerData[0]
+        // Configure User Notification Center
+       // UNUserNotificationCenter.current().delegate = self
+        
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
+    // MARK: - Actions
+
     @IBAction func AceptarLoginTouchUpInside(_ sender: UIButton) {
         
+        
+        // Request Notification Settings
+        /*UNUserNotificationCenter.current().getNotificationSettings { (notificationSettings) in
+            switch notificationSettings.authorizationStatus {
+            case .notDetermined:
+                self.requestAuthorization(completionHandler: { (success) in
+                    guard success else { return }
+                    
+                    // Schedule Local Notification
+                    self.scheduleLocalNotification()
+                })
+            case .authorized:
+                // Schedule Local Notification
+                self.scheduleLocalNotification()
+            case .denied:
+                print("Application Not Allowed to Display Notifications")
+            }
+        }*/
+
         
         let usuario: String = self.usuarioTextField.text!
         let password: String = self.passwordTextField.text!
@@ -37,11 +74,13 @@ class LoginViewControler:UIViewController, UIPickerViewDataSource, UIPickerViewD
         spinner.startAnimating()
         
         if usuario != "" || password != "" {
-            
-            ManagerLogin.getlogin(usuario, password: password,result: {(result: Bool)->Void in
+            print("Usuario: \(usuario) Password \(password) Empresa Seleccionada: \(LoginViewControler.empresaSeleccionada)")
+            self.activityInicator.startAnimating()
+            ManagerLogin.getlogin(user: usuario, password: password,result: {(result: Bool)->Void in
 
                 DispatchQueue.main.async(execute: { () -> Void in
                     
+                    self.activityInicator.stopAnimating()
                     if result{
                         ManagerVentas.initialize()
                         let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "rootController")
@@ -69,15 +108,6 @@ class LoginViewControler:UIViewController, UIPickerViewDataSource, UIPickerViewD
         
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        LoginViewControler.empresaSeleccionada = pickerData[0]
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -95,6 +125,51 @@ class LoginViewControler:UIViewController, UIPickerViewDataSource, UIPickerViewD
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
          LoginViewControler.empresaSeleccionada = pickerData[row]
     }
+    
+    
+    // MARK: - Private Methods
+    
+    private func requestAuthorization(completionHandler: @escaping (_ success: Bool) -> ()) {
+        // Request Authorization
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (success, error) in
+            if let error = error {
+                print("Request Authorization Failed (\(error), \(error.localizedDescription))")
+            }
+            
+            completionHandler(success)
+        }
+    }
+
+    private func scheduleLocalNotification() {
+        // Create Notification Content
+        let notificationContent = UNMutableNotificationContent()
+        
+        // Configure Notification Content
+        notificationContent.title = "Cocoacasts"
+        notificationContent.subtitle = "Local Notifications"
+        notificationContent.body = "In this tutorial, you learn how to schedule local notifications with the User Notifications framework."
+        
+        // Add Trigger
+        let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 10.0, repeats: false)
+        
+        // Create Notification Request
+        let notificationRequest = UNNotificationRequest(identifier: "cocoacasts_local_notification", content: notificationContent, trigger: notificationTrigger)
+        
+        // Add Request to User Notification Center
+        UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+            if let error = error {
+                print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+            }
+        }
+    }
+
 
 }
 
+extension LoginViewControler: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert])
+    }
+    
+}
