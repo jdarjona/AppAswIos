@@ -15,6 +15,37 @@ open class ManagerLogin{
     static open var token:String = ""
     static open var salesPerson: String = "V005"
     
+    struct DatosUsuarios{
+        private let defaults:UserDefaults = UserDefaults.standard
+        var usuario:String { willSet(_usuario){ defaults.set(_usuario, forKey: "usuario")}}
+        var password:String {willSet(_password){defaults.set(_password, forKey: "password")}}
+        var empresa:String {willSet(_empresa){defaults.set(_empresa, forKey: "empresa")}}
+        var token:String {willSet(_token){defaults.set(_token, forKey: "token")}}
+        var fechaToken:String {willSet(_fechaToken){defaults.set(_fechaToken, forKey: "fechaToken")}}
+    
+        init(){
+            usuario = ""
+            let usuarioGuardado = defaults.object(forKey: "usuario") as? String
+            if usuarioGuardado != nil {
+                usuario = usuarioGuardado!
+            }
+            password = ""
+            let passwordGuardado = defaults.object(forKey: "password") as? String
+            if passwordGuardado != nil {
+                password = passwordGuardado!
+            }
+            empresa = ""
+            let empresaGuardado = defaults.object(forKey: "empresa") as? String
+            if empresaGuardado != nil {
+                empresa = empresaGuardado!
+            }
+            token = ""
+            fechaToken = ""
+            
+        }
+    }
+    
+    static var datosUsuarios:DatosUsuarios = DatosUsuarios()
     
     static open func getlogin( user:String, password:String,result:@escaping (_ result:Bool)->(Void)) {
         

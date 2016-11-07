@@ -26,33 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AKSideMenuDelegate  {
         FIRApp.configure()
         ref = FIRDatabase.database().reference()
         UNUserNotificationCenter.current().delegate = self
+        //NotificationCenter.default.addObserver(self, selector: #selector(initFireBase), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         //initFireBase()
-        /*if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {(accepted, error) in
-                if !accepted {
-                    print("Notification access denied.")
-                }
-            }
-            
-            let action = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
-            let category = UNNotificationCategory(identifier: "myCategory", actions: [action], intentIdentifiers: [], options: [])
-            UNUserNotificationCenter.current().setNotificationCategories([category])
-
-        } else {
-            if let options = launchOptions {
-                // Do your checking on options here
-                let locationNotification:UILocalNotification? = options[UIApplicationLaunchOptionsKey.localNotification] as? UILocalNotification
-                
-                if locationNotification != nil {
-                    // Set icon badge number to zero
-                    application.applicationIconBadgeNumber = 0;
-                }
-            }
-
-        }
-       
-        */
-        application.applicationSupportsShakeToEdit = true
+         application.applicationSupportsShakeToEdit = true
         
 
 //        do {
@@ -163,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AKSideMenuDelegate  {
         }
         return currentSSID
     }
-    
+    var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
     func initFireBase()->(){
         
         
@@ -179,45 +155,79 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AKSideMenuDelegate  {
          print(error.localizedDescription)
          }*/
         
-        let refHandle = ref.child("Pedidos/TRH Liege").observe(FIRDataEventType.childChanged, with: { (snapshot) in
-            let postDict = snapshot.value as! [String : AnyObject]
-            print(postDict)
+        
+        backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
             
-            
-            var codigoPedido = ""
-            var estado = ""
-            
-            for (key, value) in postDict {
+            let refHandle = self?.ref.child("Pedidos/TRH Liege").observe(FIRDataEventType.childChanged, with: { (snapshot) in
+                let postDict = snapshot.value as! [String : AnyObject]
+                print(postDict)
                 
-                switch key {
+                
+                var codigoPedido = ""
+                var estado = ""
+                
+                for (key, value) in postDict {
                     
-                case "codPedido" :
-                    codigoPedido = value as! String
-                    break
-                case "descripcion" :
-                    estado = value as! String
-                    break
+                    switch key {
+                        
+                    case "codPedido" :
+                        codigoPedido = value as! String
+                        break
+                    case "descripcion" :
+                        estado = value as! String
+                        break
+                        
+                    default: break
+                    }
                     
-                default: break
+                    
+                    
+                    
                 }
                 
                 
                 
                 
-            }
-            
-            
-            
-            
-            UNUserNotificationCenter.current().getNotificationSettings { (notificationSettings) in
-                switch notificationSettings.authorizationStatus {
-                case .notDetermined:
-                    self.requestAuthorization(completionHandler: { (success) in
-                        guard success else { return }
-                        
+                UNUserNotificationCenter.current().getNotificationSettings { (notificationSettings) in
+                    switch notificationSettings.authorizationStatus {
+                    case .notDetermined:
+                        self?.requestAuthorization(completionHandler: { (success) in
+                            guard success else { return }
+                            
+                            // Schedule Local Notification
+                            //self.scheduleLocalNotification()
+                            // Create Notification Content
+                            let notificationContent = UNMutableNotificationContent()
+                            
+                            // Configure Notification Content
+                            notificationContent.title = "codigoPedido"
+                            notificationContent.subtitle = "Incidencia \(codigoPedido)"
+                            notificationContent.body = "Incidencia \(codigoPedido)"
+                            
+                            // Add Trigger
+                            let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 10.0, repeats: false)
+                            
+                            // Create Notification Request
+                            let notificationRequest = UNNotificationRequest(identifier: "cocoacasts_local_notification", content: notificationContent, trigger: notificationTrigger)
+                            
+                            // Add Request to User Notification Center
+                            UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+                                if let error = error {
+                                    print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+                                }
+                            }
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        })
+                    case .authorized:
                         // Schedule Local Notification
                         //self.scheduleLocalNotification()
-                        // Create Notification Content
                         let notificationContent = UNMutableNotificationContent()
                         
                         // Configure Notification Content
@@ -238,45 +248,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AKSideMenuDelegate  {
                             }
                         }
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    })
-                case .authorized:
-                    // Schedule Local Notification
-                    //self.scheduleLocalNotification()
-                    let notificationContent = UNMutableNotificationContent()
-                    
-                    // Configure Notification Content
-                    notificationContent.title = "codigoPedido"
-                    notificationContent.subtitle = "Incidencia \(codigoPedido)"
-                    notificationContent.body = "Incidencia \(codigoPedido)"
-                    
-                    // Add Trigger
-                    let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 10.0, repeats: false)
-                    
-                    // Create Notification Request
-                    let notificationRequest = UNNotificationRequest(identifier: "cocoacasts_local_notification", content: notificationContent, trigger: notificationTrigger)
-                    
-                    // Add Request to User Notification Center
-                    UNUserNotificationCenter.current().add(notificationRequest) { (error) in
-                        if let error = error {
-                            print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
-                        }
+                    case .denied:
+                        print("Application Not Allowed to Display Notifications")
                     }
-
-                case .denied:
-                    print("Application Not Allowed to Display Notifications")
                 }
-            }
+                
+                // ...
+            })
+            print(refHandle)
+
             
-            // ...
-        })
-        print(refHandle)
+            
+            
+            
+            
+            
+            
+            
+        }
+        assert(backgroundTask != UIBackgroundTaskInvalid)
+        
         
         
         

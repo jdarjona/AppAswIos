@@ -26,6 +26,7 @@ class LoginViewControler:UIViewController, UIPickerViewDataSource, UIPickerViewD
 
     @IBOutlet weak var picker: UIPickerView!
     
+    
     var pickerData = ["Sevilla", "Liege"]
     static var empresaSeleccionada: String = ""
 
@@ -34,8 +35,23 @@ class LoginViewControler:UIViewController, UIPickerViewDataSource, UIPickerViewD
         
         //Permiso Notificaciones
         LoginViewControler.empresaSeleccionada = pickerData[0]
-        // Configure User Notification Center
-       // UNUserNotificationCenter.current().delegate = self
+        if ManagerLogin.datosUsuarios.empresa != "" {
+        
+            let position = pickerData.index(of: ManagerLogin.datosUsuarios.empresa)
+            
+            if position != nil {
+                picker.selectRow(position!, inComponent: 0, animated: false)
+                //picker.selectedRow(inComponent: position!)
+                LoginViewControler.empresaSeleccionada = pickerData[position!]
+            }
+            
+        }
+        
+     
+        //Rescatamos datos configuracion
+        usuarioTextField.text = ManagerLogin.datosUsuarios.usuario
+        passwordTextField.text = ManagerLogin.datosUsuarios.password
+        
         
     }
     override func didReceiveMemoryWarning() {
@@ -82,6 +98,19 @@ class LoginViewControler:UIViewController, UIPickerViewDataSource, UIPickerViewD
                     
                     self.activityInicator.stopAnimating()
                     if result{
+                        
+                        //Guardamos el usuario y contraseña si es la primera vez
+                        
+                        if ManagerLogin.datosUsuarios.password == "" {
+                            ManagerLogin.datosUsuarios.password = password
+                        }
+                        if ManagerLogin.datosUsuarios.usuario == "" {
+                            ManagerLogin.datosUsuarios.usuario = usuario
+                        }
+                        if ManagerLogin.datosUsuarios.empresa == "" {
+                            ManagerLogin.datosUsuarios.empresa = LoginViewControler.empresaSeleccionada
+                        }
+                        
                         ManagerVentas.initialize()
                         let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "rootController")
                         self.present(viewController, animated: true, completion: nil)

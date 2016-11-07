@@ -60,13 +60,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AppASW/AppASW/AppDelegate.swift"
-            timestampString = "499864468.998724"
+            timestampString = "499874021.25101"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "initFireBase()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AppASW.AppDelegate.(initFireBase () -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "AppASW"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jdarjona/Documents/Proyectos/GitHub/AppAswIos2/AppASW/AppASW/AppASW/AppDelegate.swift"
+                  timestampString = "500206079.448294"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "191"
+                  endingLineNumber = "191"
+                  offsetFromSymbolStart = "2590">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AppASW.AppDelegate.(initFireBase () -&gt; ()).(closure #1).(closure #1).(closure #1)"
+                  moduleName = "AppASW"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jdarjona/Documents/Proyectos/GitHub/AppAswIos2/AppASW/AppASW/AppASW/AppDelegate.swift"
+                  timestampString = "500206079.450584"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "159"
+                  endingLineNumber = "159"
+                  offsetFromSymbolStart = "15">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
