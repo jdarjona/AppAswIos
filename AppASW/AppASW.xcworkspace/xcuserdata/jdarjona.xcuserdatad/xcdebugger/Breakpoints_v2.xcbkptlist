@@ -34,7 +34,7 @@
             startingLineNumber = "29"
             endingLineNumber = "29"
             landmarkName = "viewDidLoad()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -48,9 +48,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "5">
+            endingLineNumber = "35">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -76,12 +74,12 @@
                   moduleName = "AppASW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jdarjona/Documents/Proyectos/GitHub/AppAswIos2/AppASW/AppASW/AppASW/AppDelegate.swift"
-                  timestampString = "500206079.448294"
+                  timestampString = "500214930.127035"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "191"
                   endingLineNumber = "191"
-                  offsetFromSymbolStart = "2590">
+                  offsetFromSymbolStart = "1872">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -91,12 +89,12 @@
                   moduleName = "AppASW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jdarjona/Documents/Proyectos/GitHub/AppAswIos2/AppASW/AppASW/AppASW/AppDelegate.swift"
-                  timestampString = "500206079.450584"
+                  timestampString = "500214930.129536"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "159"
                   endingLineNumber = "159"
-                  offsetFromSymbolStart = "15">
+                  offsetFromSymbolStart = "20">
                </Location>
             </Locations>
          </BreakpointContent>

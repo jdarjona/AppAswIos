@@ -14,6 +14,7 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
     var pedidoDetalle:PedidoVenta = PedidoVenta()
     var datos:AccesoDatos = AccesoDatos()
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var pedidoDetalleTableView: UITableView!
     
     override func viewDidLoad() {
@@ -106,7 +107,7 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
         //dispatch_async(dispatch_get_main_queue()) { [unowned self] in
             
         
-            
+            self.activityIndicator.startAnimating()
             datos.getPedido(codigoPedido, result: { (result:PedidoVenta) in
                 
                 self.pedidoDetalle = result
@@ -114,6 +115,7 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
                 DispatchQueue.main.async(execute: {
                     
                      self.pedidoDetalleTableView.reloadData()
+                    self.activityIndicator.stopAnimating()
                 })
                 
                 

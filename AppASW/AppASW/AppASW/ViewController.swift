@@ -37,12 +37,7 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         
         navigationController?.navigationBar.isTranslucent = false
                 
-        //Configurar activityIndicator
-        tablaViewMonitorizacion.backgroundView = activityIndicator
-        tablaViewMonitorizacion.separatorStyle = UITableViewCellSeparatorStyle.none
-        //self.activityIndicatorView = activityIndicatorView
-        tablaViewMonitorizacion.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        //tablaViewMonitorizacion.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
         
         
         
@@ -332,7 +327,12 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     }
     func getListadoMonitorizacion(){
     
-        
+        /*//Configurar activityIndicator
+        tablaViewMonitorizacion.backgroundView = activityIndicator
+        tablaViewMonitorizacion.separatorStyle = UITableViewCellSeparatorStyle.none
+        //self.activityIndicatorView = activityIndicatorView
+        tablaViewMonitorizacion.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        //tablaViewMonitorizacion.register(UITableViewCell.self, forCellReuseIdentifier: "cell")*/
         self.activityIndicator.startAnimating()
         
             datos.getListMonitorizacion({(result:[MonitorCarga])->Void in

@@ -195,8 +195,31 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             break
                         }
                     }
+                    self.activityIndicator.startAnimating()
+                    DispatchQueue.main.async(execute: {
+                        
+                        
+                        
+                        self.sinopticoTableView.reloadData()
+                        
+                        self.activityIndicator.stopAnimating()
+                    })
+
                 }else {
                  self.listaSinopticoCompleta.append(maquina)
+                    self.activityIndicator.startAnimating()
+                    
+                    
+                    
+                    DispatchQueue.main.async(execute: {
+                        
+                        
+                        
+                        self.sinopticoTableView.reloadData()
+                        
+                        self.activityIndicator.stopAnimating()
+                    })
+
                 }
                 
            // }
