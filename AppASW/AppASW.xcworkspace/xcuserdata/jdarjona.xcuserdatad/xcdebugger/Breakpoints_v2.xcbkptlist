@@ -74,7 +74,7 @@
                   moduleName = "AppASW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jdarjona/Documents/Proyectos/GitHub/AppAswIos2/AppASW/AppASW/AppASW/AppDelegate.swift"
-                  timestampString = "500214930.127035"
+                  timestampString = "500290458.405536"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "191"
@@ -89,7 +89,7 @@
                   moduleName = "AppASW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jdarjona/Documents/Proyectos/GitHub/AppAswIos2/AppASW/AppASW/AppASW/AppDelegate.swift"
-                  timestampString = "500214930.129536"
+                  timestampString = "500290458.407432"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "159"
@@ -97,6 +97,38 @@
                   offsetFromSymbolStart = "20">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppASW/AppASW/ManagerJson.swift"
+            timestampString = "500290269.838906"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "ManagerJson"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppASW/AppASW/ManagerJson.swift"
+            timestampString = "500290279.980211"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "ManagerJson"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

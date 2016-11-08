@@ -56,7 +56,7 @@ open class ManagerJson {
 
             }
             
-            if (empresaSeleccionada == .Liege || ssid == ""){
+            if (empresaSeleccionada == .Liege){
                 if ((ssid==String(describing: WifiEmpresa.wifiLiege.rawValue) || ssid==String(describing: WifiEmpresa.wifiLiege2.rawValue) || ssid == "") ){
                     
                     basicURL = "http://192.168.1.2/WSTRH/%@"
