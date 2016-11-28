@@ -19,7 +19,8 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     var ordernDescente = true
     var ordenSeleccionado = -1
     let datos:AccesoDatos = AccesoDatos()
-    
+    let app = UIApplication.shared
+
     
     @IBOutlet weak var tablaViewMonitorizacion: UITableView!
     
@@ -113,11 +114,13 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
             }
             
             self!.activityIndicator.startAnimating()
+            self!.app.beginIgnoringInteractionEvents()
             DispatchQueue.main.async(execute: {
                 
                 
                 
                 self!.tablaViewMonitorizacion.reloadData()
+                self!.app.endIgnoringInteractionEvents()
                 self!.activityIndicator.stopAnimating()
             })
             print(index)
@@ -334,7 +337,7 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         tablaViewMonitorizacion.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         //tablaViewMonitorizacion.register(UITableViewCell.self, forCellReuseIdentifier: "cell")*/
         self.activityIndicator.startAnimating()
-        
+        app.beginIgnoringInteractionEvents()
             datos.getListMonitorizacion({(result:[MonitorCarga])->Void in
         
         
@@ -345,7 +348,7 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
                     
                     
                     self.tablaViewMonitorizacion.reloadData()
-                    
+                    self.app.endIgnoringInteractionEvents()
                     self.activityIndicator.stopAnimating()
                 })
                 

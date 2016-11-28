@@ -74,7 +74,7 @@
                   moduleName = "AppASW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jdarjona/Documents/Proyectos/GitHub/AppAswIos2/AppASW/AppASW/AppASW/AppDelegate.swift"
-                  timestampString = "500290458.405536"
+                  timestampString = "501775727.218198"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "191"
@@ -89,7 +89,7 @@
                   moduleName = "AppASW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jdarjona/Documents/Proyectos/GitHub/AppAswIos2/AppASW/AppASW/AppASW/AppDelegate.swift"
-                  timestampString = "500290458.407432"
+                  timestampString = "501775727.220395"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "159"
@@ -106,7 +106,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AppASW/AppASW/ManagerJson.swift"
-            timestampString = "500290269.838906"
+            timestampString = "501772745.885392"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "ManagerJson"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppASW/AppASW/ManagerJson.swift"
+            timestampString = "501775630.851784"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "59"
@@ -122,13 +138,61 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AppASW/AppASW/ManagerJson.swift"
-            timestampString = "500290279.980211"
+            timestampString = "501774874.80228"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "ManagerJson"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppASW/AppASW/AppDelegate.swift"
+            timestampString = "501775109.697457"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "fetchSSIDInfo()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static AppASW.AppDelegate.fetchSSIDInfo () -&gt; Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "AppASW"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jdarjona/Documents/Proyectos/GitHub/AppAswIos2/AppASW/AppASW/AppASW/AppDelegate.swift"
+                  timestampString = "501775727.235015"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "129"
+                  endingLineNumber = "129"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static AppASW.AppDelegate.fetchSSIDInfo () -&gt; Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "AppASW"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jdarjona/Documents/Proyectos/GitHub/AppAswIos2/AppASW/AppASW/AppASW/AppDelegate.swift"
+                  timestampString = "501775727.236908"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "129"
+                  endingLineNumber = "129"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -124,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AKSideMenuDelegate  {
         return conection
     }
     
-    public static func fetchSSIDInfo() -> String {
+    public static func fetchSSIDInfo() -> String? {
         var currentSSID = ""
         if let interfaces = CNCopySupportedInterfaces() {
             for i in 0..<CFArrayGetCount(interfaces) {
