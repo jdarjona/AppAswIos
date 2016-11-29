@@ -21,8 +21,7 @@ class DetallePedidoTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.paquetesLabel.layer.cornerRadius = paquetesLabel.frame.width/2
-        self.paquetesLabel.clipsToBounds = true
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -31,4 +30,14 @@ class DetallePedidoTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    public func animateCantidad(){
+    
+        UIView.animate(withDuration: 1.8, delay: 1, options: UIViewAnimationOptions(), animations: {() -> Void in
+            
+            self.paquetesLabel.layer.cornerRadius = self.paquetesLabel.frame.width/2
+            self.paquetesLabel.clipsToBounds = true
+        })
+    }
+    
+    
 }

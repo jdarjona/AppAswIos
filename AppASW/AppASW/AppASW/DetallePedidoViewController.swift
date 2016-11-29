@@ -30,7 +30,15 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
         // Dispose of any resources that can be recreated.
     }
     
-
+    /*override func viewWillAppear(_ animated: Bool) {
+        let cells = pedidoDetalleTableView.visibleCells
+       
+        
+        for i in cells {
+            let cell = i as! DetallePedidoTableViewCell
+            cell.animateCantidad()
+        }
+    }*/
     
     // MARK: - Navigation
 /*
@@ -93,13 +101,34 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
         let numeroPaquetes = NSString(format: "%.0f", pedidoDetalle.SalesLines[i].Cantidad_PAQ) as String
         
         cell.paquetesLabel.text = numeroPaquetes
-    
+        
+       
+        
         
         return cell
         
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let cellPedidoDetalle = cell as! DetallePedidoTableViewCell
+        cellPedidoDetalle.backgroundColor = UIColor.darkGray
+        UIView.animate(withDuration: 0.8, delay: 0, options: UIViewAnimationOptions(), animations: {() -> Void in
+            
+            cellPedidoDetalle.paquetesLabel.layer.cornerRadius = cellPedidoDetalle.paquetesLabel.frame.width/2
+            cellPedidoDetalle.paquetesLabel.clipsToBounds = true
+           
+            cellPedidoDetalle.backgroundColor = UIColor.white
+        })
+        
+    }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cellPedidoDetalle = cell as! DetallePedidoTableViewCell
+        
+        cellPedidoDetalle.animateCantidad()
+    }
+ 
     // FIN TableView
     
     func getDetallePedido(_ codigoPedido:String) -> () {
@@ -114,7 +143,7 @@ class DetallePedidoViewController: UIViewController,UITableViewDataSource, UITab
                 self.pedidoDetalle.SalesLines = self.pedidoDetalle.SalesLines.filter({$0.Cantidad_PAQ != 0})
                 DispatchQueue.main.async(execute: {
                     
-                     self.pedidoDetalleTableView.reloadData()
+                    self.pedidoDetalleTableView.reloadData()
                     self.activityIndicator.stopAnimating()
                 })
                 
