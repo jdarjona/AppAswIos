@@ -124,7 +124,7 @@ class SinoticoViewController: UIViewController,UITableViewDelegate,UITableViewDa
      */
     var dictionaryOfRecommendations:[NSDictionary] = [NSDictionary]()
     
-    func initFireBase()->(){
+    private func initFireBase()->(){
         
         
         self.listaSinopticoCompleta = []

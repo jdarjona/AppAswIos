@@ -15,18 +15,30 @@ import SystemConfiguration.CaptiveNetwork
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, AKSideMenuDelegate  {
+class AppDelegate: UIResponder, UIApplicationDelegate, AKSideMenuDelegate, UNUserNotificationCenterDelegate  {
 
     var window: UIWindow?
     var ref:FIRDatabaseReference!
+    let urlLieja = "Pedidos/TRH Liege"
+    let urlSevilla = "Pedidos/TRH"
+    var firebaseHadled:UInt = 0
     private var reachability:Reachability!;
+    var backgroundUpdateTask: UIBackgroundTaskIdentifier!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         FIRApp.configure()
         ref = FIRDatabase.database().reference()
         UNUserNotificationCenter.current().delegate = self
-        //NotificationCenter.default.addObserver(self, selector: #selector(initFireBase), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert], completionHandler: {(granted, error) in
+            if (granted)
+            {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+            else{
+                //Do stuff if unsuccessful...
+            }
+        })        //NotificationCenter.default.addObserver(self, selector: #selector(initFireBase), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         //initFireBase()
          application.applicationSupportsShakeToEdit = true
         
@@ -50,8 +62,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AKSideMenuDelegate  {
 
         
         
+
+        
+        
         return true
     }
+    
+    
+    
     
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -62,8 +80,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AKSideMenuDelegate  {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+       
+        
+        
+        doBackgroundTask()
+        
+        
     }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        var token = ""
+        for i in 0..<deviceToken.count {
+            token = token + String(format: "%02.2hhx", arguments: [deviceToken[i]])
+        }
+        print(token)
+    }
+    func doBackgroundTask() {
+        
+        DispatchQueue.main.async {
+            
+            self.beginBackgroundUpdateTask()
+            
+            var url:String
+            if ManagerJson.empresaSeleccionada == .Liege {
+                url = self.urlLieja
+            }else{
+                url = self.urlSevilla
+            }
 
+            self.firebaseHadled = self.ref.child(url).observe(FIRDataEventType.childChanged, with: { (data) in
+                // self.getListadoMonitorizacion()
+                
+                
+                let pedido = data.value as! NSDictionary
+                
+                let codPedido:String = pedido["codPedido"]! as! String
+                let descripcion:String = pedido["descripcion"]! as! String
+                
+                
+                //self.notificacion(codigoPedido: codPedido)
+                self.notificacion(codigoPedido: codPedido, estadoDescripcion: descripcion)
+                
+                
+            })
+            
+            //self.endBackgroundUpdateTask()
+            
+        }  
+    }
+    func beginBackgroundUpdateTask() {
+        self.backgroundUpdateTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+            self.endBackgroundUpdateTask()
+        })
+    }
+    
+    func endBackgroundUpdateTask() {
+        UIApplication.shared.endBackgroundTask(self.backgroundUpdateTask)
+        self.backgroundUpdateTask = UIBackgroundTaskInvalid
+    }
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
@@ -310,16 +385,91 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AKSideMenuDelegate  {
     }
 
     
+    func notificacion(codigoPedido:String, estadoDescripcion:String){
+        
+        
+        UNUserNotificationCenter.current().getNotificationSettings { (notificationSettings) in
+            switch notificationSettings.authorizationStatus {
+            case .notDetermined:
+                let center = UNUserNotificationCenter.current();
+                center.requestAuthorization(completionHandler: { (success, error) in
+                    guard success else { return }
+                    
+                    // Schedule Local Notification
+                    //self.scheduleLocalNotification()
+                    // Create Notification Content
+                    let notificationContent = UNMutableNotificationContent()
+                    
+                    // Configure Notification Content
+                    notificationContent.title = estadoDescripcion
+                    notificationContent.subtitle = "Pedido \(codigoPedido)"
+                    notificationContent.body = "Estado \(estadoDescripcion)"
+                    
+                    // Add Trigger
+                    let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
+                    
+                    // Create Notification Request
+                    let notificationRequest = UNNotificationRequest(identifier: "cocoacasts_local_notification", content: notificationContent, trigger: notificationTrigger)
+                    
+                    // Add Request to User Notification Center
+                    UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+                        if let error = error {
+                            print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                })
+            case .authorized:
+                // Schedule Local Notification
+                //self.scheduleLocalNotification()
+                let notificationContent = UNMutableNotificationContent()
+                
+                // Configure Notification Content
+                notificationContent.title = estadoDescripcion
+                notificationContent.subtitle = "Pedido \(codigoPedido)"
+                notificationContent.body = "Estado \(estadoDescripcion)"
+                
+                // Add Trigger
+                let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
+                
+                // Create Notification Request
+                let notificationRequest = UNNotificationRequest(identifier: "cocoacasts_local_notification", content: notificationContent, trigger: notificationTrigger)
+                
+                // Add Request to User Notification Center
+                UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+                    if let error = error {
+                        print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+                    }
+                }
+                
+            case .denied:
+                print("Application Not Allowed to Display Notifications")
+            }
+        }
+        
+        
+        
+        
+    }
+
     
     
 
 }
 
-extension AppDelegate: UNUserNotificationCenterDelegate {
+extension AppDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.alert])
     }
     
 }
+
 

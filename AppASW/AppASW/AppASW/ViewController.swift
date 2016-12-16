@@ -9,12 +9,18 @@
 import UIKit
 import Firebase
 import DropDown
+import UserNotifications
 
 class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegate,UITabBarDelegate{
 
     var listaMonitorizacion: NSMutableArray = NSMutableArray()
     var listaMonitorizacion2: [MonitorCarga] = []
+    
     var ref:FIRDatabaseReference!
+    let urlLieja = "Pedidos/TRH Liege"
+    let urlSevilla = "Pedidos/TRH"
+    var firebaseHadled:UInt = 0
+    
     var rightMenu = DropDown()
     var ordernDescente = true
     var ordenSeleccionado = -1
@@ -37,10 +43,6 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         super.viewDidLoad()
         
         navigationController?.navigationBar.isTranslucent = false
-                
-        
-        
-        
         
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipes))
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipes))
@@ -61,9 +63,9 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         
         getListadoMonitorizacion()
         
-        //self.ref = FIRDatabase.database().reference()
+        self.ref = FIRDatabase.database().reference()
         
-        //initFireBase()
+        
         
         let menuTextos = ["Ordenar por fecha","Ordenar por estado", "Ordenar por cliente", "Ordenar por comercial"]
         
@@ -135,7 +137,54 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        var url:String
+        if ManagerJson.empresaSeleccionada == .Liege {
+            url = self.urlLieja
+        }else{
+            url = self.urlSevilla
+        }
+        
+        firebaseHadled = ref.child(url).observe(FIRDataEventType.childChanged, with: { (data) in
+           // self.getListadoMonitorizacion()
+            
+            
+            let pedido = data.value as! NSDictionary
+            
+            let codPedido:String = pedido["codPedido"]! as! String
+            let descripcion:String = pedido["descripcion"]! as! String
+            
+            let cargas:[MonitorCarga] = self.listaMonitorizacion2.filter({$0.Cod__Agrupacion_Pedido == codPedido})
+            
+            for carga in cargas {
+                carga.estadoDescripcion = descripcion
+                carga.Estado = pedido["estado"]! as! Int
+            }
+            
+            DispatchQueue.main.async(execute: {
+                self.tablaViewMonitorizacion.reloadData()
+                self.app.endIgnoringInteractionEvents()
+                self.activityIndicator.stopAnimating()
+            })
+
+            
+          })
+ 
+    }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.ref.removeAllObservers()
+        
+        /*if firebaseHadled != 0 {
+        
+            self.ref.removeObserver(withHandle: firebaseHadled)
+        }*/
+    }
     
     func showRightDropdown() {
         if self.rightMenu.isDescendant(of: self.view) == true {
@@ -186,31 +235,41 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //var numeroPedidoEnRuta = 0
         
-        let pedidosEnRuta:[MonitorCarga]? = self.listaMonitorizacion2.filter({ $0.Estado == 6 })
-        var tmPedidosRuta:Int = 0
-        if let _pedidosEnRuta = pedidosEnRuta {
-        
-           // numeroPedidoEnRuta = _pedidosEnRuta.count
-            for pedido in _pedidosEnRuta {
+        let pedidosEnRuta:[MonitorCarga] = self.listaMonitorizacion2.filter({ $0.Estado == 6 })
+        var tmPedidosRutaDouble:Double = 0
+        for pedido in pedidosEnRuta {
                 
-                tmPedidosRuta += Int(pedido.pesoKg/1000)
-            }
+           tmPedidosRutaDouble += pedido.pesoKg/1000
         }
         
+        let tmPedidosRuta:Int = Int(round(tmPedidosRutaDouble))
         let fechaHoy = Date()
-        let pedidosPendienteRuta:[MonitorCarga]? = self.listaMonitorizacion2.filter({ fechaHoy.compare($0.Fecha_Carga_Requerida as! Date) == .orderedDescending || fechaHoy.compare($0.Fecha_Carga_Requerida as! Date) == .orderedSame })
+        let pedidosPendienteRuta:[MonitorCarga] = self.listaMonitorizacion2.filter({ fechaHoy.compare($0.Fecha_Carga_Requerida ) == .orderedDescending || fechaHoy.compare($0.Fecha_Carga_Requerida ) == .orderedSame })
         
         //var numeroPedidoPendienteRuta = 0
-        var tmPedidoPendienteRuta: Int = 0
-        if let _pedidosPendienteRuta = pedidosPendienteRuta {
-          //  numeroPedidoPendienteRuta = _pedidosPendienteRuta.count
-            for pedido in _pedidosPendienteRuta {
+        var tmPedidoPendienteRutaDouble:Double = 0
+        
+        for pedido in pedidosPendienteRuta {
                 
-                tmPedidoPendienteRuta += Int(pedido.pesoKg/1000)
-            }
+                tmPedidoPendienteRutaDouble += pedido.pesoKg/1000
         }
-       
-        self.navigationItem.titleView = setTitle("Monitorización", subtitle: NSString(format: "%d Tm enviadas de %d previstas hoy", tmPedidosRuta , tmPedidoPendienteRuta ) as String)
+        
+        let tmPedidoPendienteRuta: Int = Int(round(tmPedidoPendienteRutaDouble))
+        
+        
+        let pedidosEnCarga:[MonitorCarga] = self.listaMonitorizacion2.filter({$0.Estado == 3 || $0.Estado == 4 || $0.Estado == 5 })
+        var tmPedidosEnCargaDouble:Double = 0
+        for pedido in pedidosEnCarga{
+            
+                tmPedidosEnCargaDouble += pedido.pesoKg/1000
+            
+        }
+        let tmPedidoEnCarga:Int = Int(round(tmPedidosEnCargaDouble))
+        
+        let title = NSString(format: "%d Tm enviadas de %d previstas hoy", tmPedidosRuta , tmPedidoPendienteRuta ) as String
+        let subTitle = NSString(format: "%d Tm en carga",tmPedidoEnCarga) as String
+        
+        self.navigationItem.titleView = setTitle(title, subtitle: subTitle)
         
         let numeroFila = self.listaMonitorizacion2.count
         
@@ -399,6 +458,89 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         
         return titleView
     }
+    
+    /*func notificacion(codigoPedido:String, estadoDescripcion:String){
+    
+        
+        UNUserNotificationCenter.current().getNotificationSettings { (notificationSettings) in
+            switch notificationSettings.authorizationStatus {
+            case .notDetermined:
+                let center = UNUserNotificationCenter.current();
+                center.requestAuthorization(completionHandler: { (success, error) in
+                    guard success else { return }
+                    
+                    // Schedule Local Notification
+                    //self.scheduleLocalNotification()
+                    // Create Notification Content
+                    let notificationContent = UNMutableNotificationContent()
+                    
+                    // Configure Notification Content
+                    notificationContent.title = estadoDescripcion
+                    notificationContent.subtitle = "Pedido \(codigoPedido)"
+                    notificationContent.body = "Estado \(estadoDescripcion)"
+                    
+                    // Add Trigger
+                    let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
+                    
+                    // Create Notification Request
+                    let notificationRequest = UNNotificationRequest(identifier: "cocoacasts_local_notification", content: notificationContent, trigger: notificationTrigger)
+                    
+                    // Add Request to User Notification Center
+                    UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+                        if let error = error {
+                            print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                })
+            case .authorized:
+                // Schedule Local Notification
+                //self.scheduleLocalNotification()
+                let notificationContent = UNMutableNotificationContent()
+                
+                // Configure Notification Content
+                notificationContent.title = estadoDescripcion
+                notificationContent.subtitle = "Pedido \(codigoPedido)"
+                notificationContent.body = "Estado \(estadoDescripcion)"
+                
+                // Add Trigger
+                let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
+                
+                // Create Notification Request
+                let notificationRequest = UNNotificationRequest(identifier: "cocoacasts_local_notification", content: notificationContent, trigger: notificationTrigger)
+                
+                // Add Request to User Notification Center
+                UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+                    if let error = error {
+                        print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+                    }
+                }
+                
+            case .denied:
+                print("Application Not Allowed to Display Notifications")
+            }
+        }
+        
+     
+    
+    
+    }*/
 
 }
+
+extension ViewController: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert])
+    }
+    
+}
+
 

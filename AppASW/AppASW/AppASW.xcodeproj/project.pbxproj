@@ -403,6 +403,9 @@
 						DevelopmentTeam = Z7TET2P4PN;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
 							com.apple.WAC = {
 								enabled = 0;
 							};
@@ -410,12 +413,12 @@
 					};
 					2E964A871D295CAB00F2236D = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = TDU442H6UH;
+						DevelopmentTeam = Z7TET2P4PN;
 						TestTargetID = 2E964A731D295CAA00F2236D;
 					};
 					2E964A921D295CAB00F2236D = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = TDU442H6UH;
+						DevelopmentTeam = Z7TET2P4PN;
 						TestTargetID = 2E964A731D295CAA00F2236D;
 					};
 				};
@@ -712,6 +715,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Z7TET2P4PN;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -728,7 +732,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				NEW_SETTING = "";
 				NEW_SETTING1 = "";
@@ -761,6 +765,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Z7TET2P4PN;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -771,7 +776,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				NEW_SETTING = "";
 				NEW_SETTING1 = "";
@@ -786,14 +791,16 @@
 			baseConfigurationReference = F46E565C1DB4EF7AAA98EF39 /* Pods-AppASW.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AppASW/AppASW.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Z7TET2P4PN;
 				INFOPLIST_FILE = AppASW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = TRH;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asw.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -804,14 +811,16 @@
 			baseConfigurationReference = D1F510BE6AE40E2675EC2D3B /* Pods-AppASW.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AppASW/AppASW.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Z7TET2P4PN;
 				INFOPLIST_FILE = AppASW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = TRH;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asw.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -822,7 +831,7 @@
 			baseConfigurationReference = 83DF35945FD018E94A883B7F /* Pods-AppASWTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = TDU442H6UH;
+				DEVELOPMENT_TEAM = Z7TET2P4PN;
 				INFOPLIST_FILE = AppASWTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Juande.AppASWTests;
@@ -837,7 +846,7 @@
 			baseConfigurationReference = BA3CBA45055AF18786887848 /* Pods-AppASWTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = TDU442H6UH;
+				DEVELOPMENT_TEAM = Z7TET2P4PN;
 				INFOPLIST_FILE = AppASWTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -852,7 +861,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F2A98E813EB2B287F12B12D8 /* Pods-AppASWUITests.debug.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = TDU442H6UH;
+				DEVELOPMENT_TEAM = Z7TET2P4PN;
 				INFOPLIST_FILE = AppASWUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Juande.AppASWUITests;
@@ -866,7 +875,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B4C121D5AE911035E4971A7 /* Pods-AppASWUITests.release.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = TDU442H6UH;
+				DEVELOPMENT_TEAM = Z7TET2P4PN;
 				INFOPLIST_FILE = AppASWUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Juande.AppASWUITests;
