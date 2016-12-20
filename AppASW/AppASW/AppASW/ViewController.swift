@@ -18,7 +18,8 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
     
     var ref:FIRDatabaseReference!
     let urlLieja = "Pedidos/TRH Liege"
-    let urlSevilla = "Pedidos/TRH"
+    let urlSevilla = "Pedidos/T_R_H_"
+    var urlFireBase = ""
     var firebaseHadled:UInt = 0
     
     var rightMenu = DropDown()
@@ -56,9 +57,11 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         if(LoginViewControler.empresaSeleccionada == "Liege"){
             tabBarMonitorizacion.selectedItem = tabBarItemLiege
             ManagerJson.empresaSeleccionada = .Liege
+            urlFireBase = self.urlLieja
         }else{
             tabBarMonitorizacion.selectedItem = tabBarItemSevilla
             ManagerJson.empresaSeleccionada = .Sevilla
+            urlFireBase = self.urlSevilla
         }
         
         getListadoMonitorizacion()
@@ -141,15 +144,26 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         
         super.viewWillAppear(animated)
         
-        var url:String
-        if ManagerJson.empresaSeleccionada == .Liege {
-            url = self.urlLieja
-        }else{
-            url = self.urlSevilla
-        }
+        registroFireBase()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         
-        firebaseHadled = ref.child(url).observe(FIRDataEventType.childChanged, with: { (data) in
-           // self.getListadoMonitorizacion()
+        self.ref.removeAllObservers()
+        
+        /*if firebaseHadled != 0 {
+        
+            self.ref.removeObserver(withHandle: firebaseHadled)
+        }*/
+    }
+    
+    func registroFireBase() -> Void {
+        
+        ref.removeAllObservers()
+        
+        firebaseHadled = ref.child(self.urlFireBase).observe(FIRDataEventType.childChanged, with: { (data) in
+            // self.getListadoMonitorizacion()
             
             
             let pedido = data.value as! NSDictionary
@@ -169,23 +183,11 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
                 self.app.endIgnoringInteractionEvents()
                 self.activityIndicator.stopAnimating()
             })
-
             
-          })
- 
+            
+        })
+
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        self.ref.removeAllObservers()
-        
-        /*if firebaseHadled != 0 {
-        
-            self.ref.removeObserver(withHandle: firebaseHadled)
-        }*/
-    }
-    
     func showRightDropdown() {
         if self.rightMenu.isDescendant(of: self.view) == true {
             self.rightMenu.hide() //hideMenu()
@@ -308,10 +310,6 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         */
      
         
-        
-        
-        
-        
         return cell;
     }
     
@@ -341,15 +339,19 @@ class ViewController: UIViewController,UITableViewDataSource, UITableViewDelegat
         switch item.tag {
         case 0:
             ManagerJson.empresaSeleccionada = .Liege
-          
+            self.urlFireBase = self.urlLieja
+            break
         case 1:
             ManagerJson.empresaSeleccionada = .Sevilla
-            
+            self.urlFireBase =  self.urlSevilla
+            break
         default:
             break
 
         }
+        registroFireBase()
         getListadoMonitorizacion()
+        
     }
     
     
